@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyru5tb0ceyo5"]
+
+[ext_resource type="Script" uid="uid://c6i61wmhdx1iu" path="res://scenes/ui/reward_screen.gd" id="1_omiye"]
+
+[node name="RewardScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_omiye")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 650.0
+metadata/_edit_lock_ = true
+
+[node name="RewardContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(56, 31)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22900002
+anchor_top = 0.37500003
+anchor_right = 0.77500004
+anchor_bottom = 0.50600004
+offset_left = 0.19198608
+offset_top = -1.5258789e-05
+offset_right = 0.19995117
+offset_bottom = 0.111968994
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 88.0
+offset_right = 814.0
+offset_bottom = 162.0
+theme_override_font_sizes/font_size = 54
+text = "Choose your Reward"

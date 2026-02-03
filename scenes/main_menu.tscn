@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://u7vx8yqbabhr"]
+
+[ext_resource type="Script" uid="uid://5chybx7ypql1" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://c8qd3tjiddiuy" path="res://sprites/CalculatorCalculatroSpriteSheet.png" id="2_ekxnf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqqt6"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu84c"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtw2f"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa1go"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbmy8"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jk1qb"]
+atlas = ExtResource("2_ekxnf")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5dd4i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqqt6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu84c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ln24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtw2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa1go")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbmy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jk1qb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 413.0
+offset_top = 528.0
+offset_right = 678.0
+offset_bottom = 637.0
+theme_override_font_sizes/font_size = 54
+text = "Start"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 295.0
+offset_top = 6.0
+offset_right = 865.0
+offset_bottom = 142.0
+theme_override_colors/font_color = Color(1, 0.5529412, 1, 1)
+theme_override_font_sizes/font_size = 82
+text = "CALCULATRO"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(556, 313)
+scale = Vector2(5.273438, 6.015625)
+sprite_frames = SubResource("SpriteFrames_5dd4i")
+autoplay = "default"
+frame_progress = 0.05473932
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

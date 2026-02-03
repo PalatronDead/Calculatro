@@ -1,0 +1,168 @@
+[gd_scene load_steps=10 format=3 uid="uid://6b5vtwy281k7"]
+
+[ext_resource type="Script" uid="uid://gvtqmvdjehhb" path="res://battle_manager.gd" id="1_28s16"]
+[ext_resource type="PackedScene" uid="uid://c7xh6d6ju67xx" path="res://scenes/enemy.tscn" id="2_bsu3s"]
+[ext_resource type="Script" uid="uid://ch0tnev7o0fqi" path="res://calculator_ui.gd" id="2_ftvu5"]
+[ext_resource type="Script" uid="uid://v5ijay7cxdf5" path="res://calculator_logic.gd" id="3_0yex5"]
+[ext_resource type="Texture2D" uid="uid://dy13rcfrvtrxs" path="res://sprites/CalculatorCalculatroAdvanced1.png" id="3_ftvu5"]
+[ext_resource type="PackedScene" uid="uid://cyru5tb0ceyo5" path="res://scenes/ui/reward_screen.tscn" id="4_28s16"]
+[ext_resource type="Script" uid="uid://d1yndd3ssp56y" path="res://run_manager.gd" id="6_0yex5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yex5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bsu3s"]
+
+[node name="BattleManager" type="Node" node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "calculator_logic")]
+script = ExtResource("1_28s16")
+calculator_ui = NodePath("UiLayer/CalculatorUI")
+spawn_point = NodePath("EnemyPositionMarker")
+player_hp_label = NodePath("UiLayer/PlayerHPLabel")
+reward_screen = NodePath("Popups/RewardScreen")
+enemy_scene = ExtResource("2_bsu3s")
+calculator_logic = NodePath("CalculatorLogic")
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+
+[node name="CalculatorUI" type="Control" parent="UiLayer" node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 580.0
+offset_top = 213.0
+offset_right = 1076.0
+offset_bottom = 604.0
+mouse_filter = 2
+script = ExtResource("2_ftvu5")
+hand_slots = NodePath("HandSlots")
+equation_container = NodePath("EquationSlots")
+execute_button = NodePath("ExecuteButton")
+calculator_logic = NodePath("../../CalculatorLogic")
+end_turn_button = NodePath("EndTurnButton")
+
+[node name="CalculatorBackground" type="Sprite2D" parent="UiLayer/CalculatorUI"]
+texture_filter = 1
+position = Vector2(246, 126)
+scale = Vector2(8.015625, 6.2656245)
+texture = ExtResource("3_ftvu5")
+
+[node name="HandSlots" type="Control" parent="UiLayer/CalculatorUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slot1" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 135.0
+offset_top = 150.0
+offset_right = 191.0
+offset_bottom = 181.0
+
+[node name="Slot2" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 207.0
+offset_top = 150.0
+offset_right = 263.0
+offset_bottom = 181.0
+
+[node name="Slot3" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 279.0
+offset_top = 150.0
+offset_right = 335.0
+offset_bottom = 181.0
+
+[node name="Slot4" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 135.0
+offset_top = 194.0
+offset_right = 191.0
+offset_bottom = 225.0
+
+[node name="Slot5" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 206.0
+offset_top = 194.0
+offset_right = 263.0
+offset_bottom = 226.0
+
+[node name="Slot6" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 279.0
+offset_top = 194.0
+offset_right = 336.0
+offset_bottom = 225.0
+
+[node name="Slot7" type="Control" parent="UiLayer/CalculatorUI/HandSlots"]
+anchors_preset = 0
+offset_left = 135.0
+offset_top = 238.0
+offset_right = 191.0
+offset_bottom = 269.0
+
+[node name="EndTurnButton" type="Button" parent="UiLayer/CalculatorUI"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 246.0
+offset_right = 343.0
+offset_bottom = 277.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0yex5")
+text = "END
+"
+
+[node name="ExecuteButton" type="Button" parent="UiLayer/CalculatorUI"]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 246.0
+offset_right = 269.0
+offset_bottom = 277.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bsu3s")
+text = "KILL"
+
+[node name="EquationSlots" type="HBoxContainer" parent="UiLayer/CalculatorUI"]
+custom_minimum_size = Vector2(56, 31)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.76000005
+anchor_top = 0.049000002
+anchor_right = 0.76000005
+anchor_bottom = 0.049000002
+offset_left = -227.96002
+offset_top = 12.841
+offset_right = -41.960022
+offset_bottom = 94.84099
+alignment = 1
+
+[node name="PlayerHPLabel" type="Label" parent="UiLayer"]
+anchors_preset = -1
+anchor_bottom = 0.018000001
+offset_left = 844.0
+offset_top = 1.0
+offset_right = 1151.0
+offset_bottom = 51.336
+
+[node name="CalculatorLogic" type="Node" parent="."]
+script = ExtResource("3_0yex5")
+
+[node name="EnemyPositionMarker" type="Marker2D" parent="."]
+position = Vector2(402, 143)
+
+[node name="Popups" type="CanvasLayer" parent="."]
+
+[node name="RewardScreen" parent="Popups" instance=ExtResource("4_28s16")]
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(574, 324)
+
+[node name="RunManager" type="Node" parent="."]
+script = ExtResource("6_0yex5")

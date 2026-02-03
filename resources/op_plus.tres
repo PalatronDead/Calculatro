@@ -1,7 +1,11 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://s2smwnevobwq"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://s2smwnevobwq"]
 
+[ext_resource type="Script" uid="uid://cm1rt2fikn6wy" path="res://resources/modifier_data.gd" id="1_1fj86"]
 [ext_resource type="Script" uid="uid://4fpm4dhehcso" path="res://resources/item_data.gd" id="1_7osg8"]
 
 [resource]
 script = ExtResource("1_7osg8")
+type = 1
+display_name = "+"
+operator_symbol = "+"
 metadata/_custom_type_script = "uid://4fpm4dhehcso"

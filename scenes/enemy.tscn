@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7xh6d6ju67xx"]
+
+[ext_resource type="Script" uid="uid://bdjajqb776j03" path="res://scenes/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="2_md0e3"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_md0e3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(6.999996, -0.5)
+scale = Vector2(4.40625, 2.859375)
+texture = ExtResource("2_md0e3")
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = -31.0
+offset_top = -28.0
+offset_right = 50.0
+offset_bottom = -5.0

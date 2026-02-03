@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://7vnwktvq5lan"]
+
+[ext_resource type="Script" uid="uid://b58h7dhlds686" path="res://scenes/ui/item_display.gd" id="1_63bw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63bw0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1fqpp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k80ir"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cnogr"]
+
+[node name="ItemDisplay" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBoxEmpty_63bw0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1fqpp")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_k80ir")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cnogr")
+script = ExtResource("1_63bw0")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
