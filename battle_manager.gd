@@ -14,6 +14,7 @@ var current_enemy: Enemy
 var current_player_hp: int
 
 var shake_strength: float = 0
+var free_turns: int = 2
 
 var reward_pool = [
 	preload("res://resources/number_one.tres"),
@@ -100,9 +101,12 @@ func spawn_new_enemy():
 func _on_player_attack(damage: int):
 	if is_instance_valid(current_enemy):
 		current_enemy.take_damage(damage)
-		RunManager.modifiy_hp(-current_enemy.attack())
-		calculator_ui.apply_shake()
-		SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
+		if current_enemy.current_hp > 0:
+			RunManager.modifiy_hp(-current_enemy.attack())
+			calculator_ui.apply_shake()
+			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
+		else:
+			pass
 	else:
 		print("Enemy is already dead")
 		
@@ -110,15 +114,18 @@ func _on_turn_ended():
 	print("Turn Ended. Enemy Attacking...")
 	
 	if is_instance_valid(current_enemy):
-		var damage = current_enemy.attack()
-		RunManager.modifiy_hp(-damage)
+		if free_turns > 0:
+			await get_tree().create_timer(0.5).timeout
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+			free_turns -= 1
+		else:
+			await get_tree().create_timer(0.5).timeout
+			var damage = current_enemy.attack()
+			RunManager.modifiy_hp(-damage)
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 			
 		if RunManager.current_hp <= 0:
 			game_over()
-		
-	await get_tree().create_timer(0.5).timeout
-	
-	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 	
 func _update_player_ui(new_hp : int):
 	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
@@ -147,6 +154,7 @@ func _on_enemy_died():
 	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 	spawn_new_enemy()
 	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+	RunManager.current_hp = RunManager.max_hp
 
 
 func game_over():
