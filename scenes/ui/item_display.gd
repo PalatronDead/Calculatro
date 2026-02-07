@@ -11,7 +11,6 @@ func setup(new_data: ItemData):
 	if not pressed.is_connected(_on_pressed):
 		pressed.connect(_on_pressed)
 	
-	await get_tree().process_frame
 	scale = Vector2.ONE		
 	animate_pop()
 

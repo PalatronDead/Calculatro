@@ -16,24 +16,35 @@ var current_player_hp: int
 var shake_strength: float = 0
 
 var reward_pool = [
-	preload("res://resources/number_five.tres"),
+	preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
 	preload("res://resources/number_two.tres"),
+	preload("res://resources/number_two.tres"),
+	preload("res://resources/number_two.tres"),
+	preload("res://resources/number_two.tres"),
+	preload("res://resources/number_three.tres"),
+	preload("res://resources/number_three.tres"),
+	preload("res://resources/number_three.tres"),
+	preload("res://resources/number_four.tres"),
+	preload("res://resources/number_four.tres"),
+	preload("res://resources/number_five.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/number_five.tres"),
-	preload("res://resources/number_two.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/number_five.tres"),
-	preload("res://resources/number_two.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/number_five.tres"),
-	preload("res://resources/number_two.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/number_five.tres"),
-	preload("res://resources/number_two.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/number_five.tres"),
-	preload("res://resources/number_two.tres"),
-	preload("res://resources/op_plus.tres")
+	preload("res://resources/op_minus.tres"),
+	preload("res://resources/op_minus.tres"),
+	preload("res://resources/op_minus.tres"),
+	preload("res://resources/op_minus.tres"),
+	preload("res://resources/op_division.tres"),
+	preload("res://resources/op_division.tres"),
+	preload("res://resources/op_division.tres"),
+	preload("res://resources/op_mult.tres"),
+	preload("res://resources/op_mult.tres"),
 ]
 	
 func _input(event):
@@ -139,5 +150,6 @@ func _on_enemy_died():
 
 
 func game_over():
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	RunManager.start_new_run()

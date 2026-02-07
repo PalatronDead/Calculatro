@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://c6bw265w0xjx3"]
+
+[ext_resource type="Script" uid="uid://cm1rt2fikn6wy" path="res://resources/modifier_data.gd" id="1_s0ec0"]
+[ext_resource type="Script" uid="uid://4fpm4dhehcso" path="res://resources/item_data.gd" id="2_5i187"]
+
+[resource]
+script = ExtResource("2_5i187")
+type = 1
+display_name = "-"
+operator_symbol = "-"
+metadata/_custom_type_script = "uid://4fpm4dhehcso"
