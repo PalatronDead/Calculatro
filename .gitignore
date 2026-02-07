@@ -1,3 +1,19 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Godot generated files
+.import/
+.export/
+.export_presets.cfg
+
+# Builds / exports
+*.exe
+*.pck
+*.zip
+/builds/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
