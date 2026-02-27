@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7xh6d6ju67xx"]
+
+[ext_resource type="Script" uid="uid://bdjajqb776j03" path="res://enemy/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="2_md0e3"]
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="2_ppra6"]
+[ext_resource type="Resource" uid="uid://06lm2ejrwpbv" path="res://enemy/enemyResources/attack_action.tres" id="3_pmsee"]
+[ext_resource type="Script" uid="uid://b47gb4p5escmg" path="res://Base/state_machine.gd" id="4_p200p"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_md0e3")
+possible_actions = Array[ExtResource("2_ppra6")]([ExtResource("3_pmsee")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(6.999996, -0.5)
+scale = Vector2(4.40625, 2.859375)
+texture = ExtResource("2_md0e3")
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = -31.0
+offset_top = -28.0
+offset_right = 50.0
+offset_bottom = -5.0
+
+[node name="IntentIcon" type="TextureRect" parent="."]
+offset_left = -34.0
+offset_top = -82.0
+offset_right = 6.0
+offset_bottom = -42.0
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("4_p200p")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://6b5vtwy281k7"]
 
 [ext_resource type="Script" uid="uid://gvtqmvdjehhb" path="res://battle_manager.gd" id="1_28s16"]
-[ext_resource type="PackedScene" uid="uid://c7xh6d6ju67xx" path="res://scenes/enemy.tscn" id="2_bsu3s"]
+[ext_resource type="PackedScene" uid="uid://c7xh6d6ju67xx" path="res://enemy/enemy.tscn" id="2_bsu3s"]
 [ext_resource type="Script" uid="uid://ch0tnev7o0fqi" path="res://calculator_ui.gd" id="2_ftvu5"]
 [ext_resource type="Script" uid="uid://v5ijay7cxdf5" path="res://calculator_logic.gd" id="3_0yex5"]
 [ext_resource type="Texture2D" uid="uid://dy13rcfrvtrxs" path="res://sprites/CalculatorCalculatroAdvanced1.png" id="3_ftvu5"]
