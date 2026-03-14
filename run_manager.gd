@@ -1,7 +1,7 @@
 extends Node
 
-var max_hp: int = 10
-var current_hp: int = 10
+var max_hp: int = 100
+var current_hp: int = 100
 var deck: Array[ItemData] = []
 
 signal hp_changed(new_amount)

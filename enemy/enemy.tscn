@@ -1,14 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7xh6d6ju67xx"]
+[gd_scene load_steps=11 format=3 uid="uid://c7xh6d6ju67xx"]
 
 [ext_resource type="Script" uid="uid://bdjajqb776j03" path="res://enemy/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="2_md0e3"]
 [ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="2_ppra6"]
-[ext_resource type="Resource" uid="uid://06lm2ejrwpbv" path="res://enemy/enemyResources/attack_action.tres" id="3_pmsee"]
+[ext_resource type="Texture2D" uid="uid://c6u4ot25l44rv" path="res://sprites/enemyDeffendIntentionIcon.png" id="3_1wwld"]
+[ext_resource type="Script" uid="uid://5mgam454km58" path="res://enemy/enemyResources/defend_action.gd" id="3_pmsee"]
 [ext_resource type="Script" uid="uid://b47gb4p5escmg" path="res://Base/state_machine.gd" id="4_p200p"]
+[ext_resource type="Texture2D" uid="uid://cj3dw2pgqmr2c" path="res://sprites/enemyAttackIntentionIcon.png" id="5_5ffra"]
+[ext_resource type="Script" uid="uid://b7rxpm0d7cqn7" path="res://enemy/enemyResources/attack_action.gd" id="6_e355f"]
+
+[sub_resource type="Resource" id="Resource_y5vj3"]
+script = ExtResource("3_pmsee")
+name = "Defend"
+intent_icon = ExtResource("3_1wwld")
+metadata/_custom_type_script = "uid://5mgam454km58"
+
+[sub_resource type="Resource" id="Resource_78jik"]
+script = ExtResource("6_e355f")
+name = "Attack"
+intent_icon = ExtResource("5_5ffra")
+base_value = 5
+metadata/_custom_type_script = "uid://b7rxpm0d7cqn7"
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_md0e3")
-possible_actions = Array[ExtResource("2_ppra6")]([ExtResource("3_pmsee")])
+possible_actions = Array[ExtResource("2_ppra6")]([SubResource("Resource_y5vj3"), SubResource("Resource_78jik")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -23,10 +39,16 @@ offset_right = 50.0
 offset_bottom = -5.0
 
 [node name="IntentIcon" type="TextureRect" parent="."]
-offset_left = -34.0
-offset_top = -82.0
-offset_right = 6.0
-offset_bottom = -42.0
+offset_left = -35.0
+offset_top = -84.0
+offset_right = 5.0
+offset_bottom = -44.0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("4_p200p")
+
+[node name="IntentLabel" type="Label" parent="."]
+offset_left = 3.0
+offset_top = -59.0
+offset_right = 43.0
+offset_bottom = -36.0

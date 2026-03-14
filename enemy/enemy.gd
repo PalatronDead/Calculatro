@@ -4,6 +4,7 @@ class_name Enemy extends Node2D
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var intent_icon: TextureRect = $IntentIcon
+@onready var intent_label: Label = $IntentLabel
 
 @export var max_hp: int = 100
 var current_hp: int
@@ -30,7 +31,7 @@ func take_damage(amount: int):
 	
 	if is_defending:
 		final_damage = amount / 2
-		is_defending = false 
+		is_defending = false
 
 	current_hp -= final_damage
 	update_ui()
@@ -51,9 +52,11 @@ func die():
 
 func pick_action() -> EnemyAction:
 	return possible_actions.pick_random()
-
+	
 func show_intent():
 	intent_icon.texture = current_action.intent_icon
+	if(current_action.base_value > 0):
+		intent_label.text = str(current_action.base_value)
 
 func hide_intent():
 	intent_icon.texture = null

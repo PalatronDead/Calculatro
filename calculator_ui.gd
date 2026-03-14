@@ -64,6 +64,13 @@ func _return_to_hand(data: ItemData, button_instance: ItemDisplay):
 		button_instance.item_selected.connect(_on_hand_item_clicked.bind(button_instance))
 
 func _on_execute_pressed():
+	var items_used = equation_container.get_children()
+
+	for item in items_used:
+		var data: ItemData = item.data
+		RunManager.deck.erase(data)
+		item.queue_free()
+		
 	var sequence_data: Array[ItemData] = []
 	
 	for button in equation_container.get_children():
@@ -79,14 +86,14 @@ func _on_execute_pressed():
 		print("Invalid Equation")
 		apply_shake()
 
+func _on_end_turn_pressed():
+	turn_ended.emit()
+	
 func _clear_ui():
 	_clear_equation()
 	for slot in hand_slots.get_children():
 		for child in slot.get_children():
 			child.queue_free()
-
-func _on_end_turn_pressed():
-	turn_ended.emit()
 	
 func _clear_equation(): 
 	for child in equation_container.get_children():

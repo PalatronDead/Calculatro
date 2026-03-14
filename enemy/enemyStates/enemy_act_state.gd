@@ -11,4 +11,5 @@ func get_state_name() -> String:
 func enter():
 	enemy.hide_intent()
 	enemy.current_action.execute(enemy, enemy.battle_manager)
+	print("Act state")
 	enemy.state_machine.transition("Choose")

@@ -10,3 +10,4 @@ func get_state_name() -> String:
 
 func enter():
 	enemy.show_intent()
+	print("Show Intent")

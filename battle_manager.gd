@@ -109,32 +109,29 @@ func _on_player_attack(damage: int):
 			pass
 	else:
 		print("Enemy is already dead")
-		
-func _on_turn_ended():
-	print("Turn Ended. Enemy Attacking...")
-	
-	if is_instance_valid(current_enemy):
-
-		await get_tree().create_timer(0.5).timeout
-		var damage = current_enemy.attack()
-		RunManager.modifiy_hp(-damage)
-		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-			
-		if RunManager.current_hp <= 0:
-			game_over()
 	
 func _update_player_ui(new_hp : int):
 	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
 
 func take_damage(amount: int):
-	current_player_hp -= amount
-	_update_player_ui(current_player_hp)	
+	RunManager.modifiy_hp(-amount)
+	_update_player_ui(RunManager.current_hp)
 	calculator_ui.apply_shake()
 	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 	
-	if current_player_hp <= 0:
+	if RunManager.current_hp <= 0:
 		game_over()
-		
+
+func _on_turn_ended():
+	if is_instance_valid(current_enemy):
+		if current_enemy.current_hp > 0:
+			current_enemy.state_machine.transition("Act")
+			if(RunManager.deck.size() >= 1):
+				calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+				print("Shuffleando los shuffles")
+			else:
+				game_over()
+			
 func _on_enemy_died():
 	calculator_ui.hide()
 	print("Enemy Defeated!")

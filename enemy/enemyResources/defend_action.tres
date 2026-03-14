@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyAction" load_steps=3 format=3 uid="uid://blpa632ugjicq"]
 
-[ext_resource type="Texture2D" uid="uid://b05k5mlqna83k" path="res://sprites/GuanteCalculatro.png" id="1_8ct7r"]
+[ext_resource type="Texture2D" uid="uid://c6u4ot25l44rv" path="res://sprites/enemyDeffendIntentionIcon.png" id="1_8ct7r"]
 [ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_j0uyj"]
 
 [resource]

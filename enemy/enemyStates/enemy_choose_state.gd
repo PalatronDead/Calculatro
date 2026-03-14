@@ -11,3 +11,4 @@ func get_state_name() -> String:
 func enter():
 	enemy.current_action = enemy.pick_action()
 	enemy.state_machine.transition("ShowIntent")
+	print('Choose State')
