@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_omiye")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 650.0
@@ -34,11 +34,38 @@ grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 276.0
-offset_top = 88.0
-offset_right = 814.0
-offset_bottom = 162.0
+offset_left = 282.0
+offset_top = 62.0
+offset_right = 820.0
+offset_bottom = 136.0
 theme_override_font_sizes/font_size = 54
 text = "Choose your Reward"
+
+[node name="RewardLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 373.0
+offset_top = 134.0
+offset_right = 736.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 34
+text = "Rewards Collected 0/2"
+
+[node name="RerollButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 454.0
+offset_right = 667.0
+offset_bottom = 519.0
+theme_override_font_sizes/font_size = 34
+text = "Reroll"
+
+[node name="RerollLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 546.0
+offset_right = 627.0
+offset_bottom = 618.0
+theme_override_font_sizes/font_size = 28
+text = "Rerolls 0/1"

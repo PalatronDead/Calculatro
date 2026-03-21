@@ -83,6 +83,7 @@ func _ready() -> void:
 	RunManager.hp_changed.connect(_update_player_ui)
 	calculator_ui.attack_made.connect(_on_player_attack)
 	calculator_ui.turn_ended.connect(_on_turn_ended)
+	reward_screen.reroll_selected.connect(_on_reroll_selected)
 	start_battle()
 	
 
@@ -130,7 +131,7 @@ func _on_turn_ended():
 				calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 				print("Shuffleando los shuffles")
 			else:
-				game_over()
+				calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
 			
 func _on_enemy_died():
 	calculator_ui.hide()
@@ -141,7 +142,7 @@ func _on_enemy_died():
 	
 	reward_screen.set_rewards(random_reward)
 	var selection = await reward_screen.reward_selected
-	print("Player chose: ", selection.display_name)
+	print("Player chose: ", selection[0].display_name, selection[1].display_name)
 	RunManager.add_item_to_deck(selection)
 	calculator_ui.show()
 	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
@@ -149,7 +150,15 @@ func _on_enemy_died():
 	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 	RunManager.current_hp = RunManager.max_hp
 
-
+func _on_reroll_selected(amountOfRerolls: int):
+	if(amountOfRerolls == 1):
+		var random_reward: Array[ItemData] = []
+		for i in range(3):
+			random_reward.append(reward_pool.pick_random())
+		reward_screen.set_rewards(random_reward)
+	else:
+		pass
+	
 func game_over():
 	await get_tree().create_timer(0.5).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

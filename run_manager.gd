@@ -3,6 +3,7 @@ extends Node
 var max_hp: int = 100
 var current_hp: int = 100
 var deck: Array[ItemData] = []
+var runDeck: Array[ItemData] = []
 
 signal hp_changed(new_amount)
 signal deck_changed
@@ -21,11 +22,8 @@ func start_new_run():
 	preload("res://resources/number_two.tres"),
 	preload("res://resources/number_three.tres"),
 	preload("res://resources/number_three.tres"),
-	preload("res://resources/number_three.tres"),
 	preload("res://resources/number_four.tres"),
 	preload("res://resources/number_four.tres"),
-	preload("res://resources/number_four.tres"),
-	preload("res://resources/number_five.tres"),
 	preload("res://resources/number_five.tres"),
 	preload("res://resources/number_five.tres"),
 	preload("res://resources/op_plus.tres"),
@@ -33,12 +31,12 @@ func start_new_run():
 	preload("res://resources/op_plus.tres"),
 	preload("res://resources/op_plus.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/op_plus.tres"),
-	preload("res://resources/op_plus.tres")
 ]
+	runDeck = deck.duplicate()
 	
-func add_item_to_deck(item: ItemData):
-	deck.append(item)
+func add_item_to_deck(itemArray: Array[ItemData]):
+	deck.append_array(itemArray)
+	runDeck.append_array(itemArray)
 	deck_changed.emit()
 
 func modifiy_hp(amount: int):
@@ -48,4 +46,7 @@ func modifiy_hp(amount: int):
 func shuffle_deck(deck: Array[ItemData]) -> Array[ItemData]:
 	deck.shuffle()
 	return deck
-	
+
+func return_deck_after_losing_it_all():
+	deck = runDeck.duplicate()
+	return deck
