@@ -6,7 +6,7 @@ extends Control
 @export var calculator_logic: Node
 @export var end_turn_button: Button
 
-signal attack_made(damage_amount: int)
+signal attack_made(payload: AttackPayload)
 signal turn_ended
 
 var current_hand_data: Array[ItemData] = []
@@ -66,21 +66,21 @@ func _return_to_hand(data: ItemData, button_instance: ItemDisplay):
 func _on_execute_pressed():
 	var items_used = equation_container.get_children()
 
-	for item in items_used:
-		var data: ItemData = item.data
-		RunManager.deck.erase(data)
-		item.queue_free()
-		
 	var sequence_data: Array[ItemData] = []
 	
-	for button in equation_container.get_children():
-		if button is ItemDisplay:
-			sequence_data.append(button.data)
+	for item in items_used:
+		if item is ItemDisplay:
+			sequence_data.append(item.data)
+			var data: ItemData = item.data
+			RunManager.deck.erase(data)
+			item.queue_free()
 
-	var damage = calculator_logic.calculate_sequence(sequence_data)
+	var damage_payload = calculator_logic.calculate_sequence(sequence_data)
 	
-	if damage > 0:
-		attack_made.emit(damage)
+	print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
+	
+	if damage_payload.base_damage > 0:
+		attack_made.emit(damage_payload)
 		_clear_equation()
 	else:
 		print("Invalid Equation")

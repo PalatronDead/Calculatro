@@ -20,7 +20,7 @@ func _on_pressed():
 	
 func update_visuals():
 	if data.type == ItemData.Type.INTEGER:
-		$Label.text = str(data.get_modified_value())
+		$Label.text = str(data.value)
 	else:
 		$Label.text = data.display_name
 

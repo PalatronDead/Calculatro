@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackAction" format=3 uid="uid://r85yw46p4rhs"]
+
+[ext_resource type="Script" uid="uid://wsrcvt7u07mf" path="res://enemy/enemyScripts/actionScripts/attack_action.gd" id="1_cw34a"]
+[ext_resource type="Texture2D" uid="uid://cj3dw2pgqmr2c" path="res://sprites/enemyAttackIntentionIcon.png" id="1_mrvue"]
+
+[resource]
+script = ExtResource("1_cw34a")
+name = "Attack"
+intent_icon = ExtResource("1_mrvue")
+base_value = 5
+metadata/_custom_type_script = "uid://wsrcvt7u07mf"

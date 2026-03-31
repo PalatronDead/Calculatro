@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MinusAction" format=3 uid="uid://cal5ddtbejqjc"]
+
+[ext_resource type="Script" uid="uid://caslgn8alm5h" path="res://resources/OperatorActions/minus_action.gd" id="1_6cebq"]
+
+[resource]
+script = ExtResource("1_6cebq")
+metadata/_custom_type_script = "uid://caslgn8alm5h"

@@ -5,10 +5,17 @@ extends Node
 @export var player_hp_label: Label
 @export var reward_screen: Control
 @export var enemy_scene: PackedScene
+@export var encounter_type: Array[EncounterData]
+@export var marker_array: Array[Marker2D]
 
 @export var calculator_logic: Node
 
-var current_enemy: Enemy
+var number_of_targets: int = 0
+var clicked_targets: Array[Node] = []
+
+var wait_payload: AttackPayload
+
+var current_enemies: Array = []
 
 @export var max_player_hp: int = 100
 var current_player_hp: int
@@ -46,39 +53,7 @@ var reward_pool = [
 	preload("res://resources/op_mult.tres"),
 	preload("res://resources/op_mult.tres"),
 ]
-	
-func _input(event):
-	if event.is_action_pressed("+1 Modifier"):
-		apply_debug_upgrade()
-	if event.is_action_pressed("*2 Modifier"):
-		var hand_container = calculator_ui.get_node("HandContainer")
-		var buttons = hand_container.get_children()
-		if buttons.size() > 0:
-			var first_button = buttons[0]
-			first_button.data.add_modifier(preload("res://resources/mod_times_2.tres"))
-			first_button.update_visuals()
-	
-func apply_debug_upgrade():
-	print("Applying Upgrade")
-	
-	var mod = ModifierData.new()
-	mod.type = ModifierData.Type.ADD_VALUE
-	mod.value = 1
-	
-	var hand_container = calculator_ui.get_node("HandContainer")
-	var buttons = hand_container.get_children()
-	
-	if buttons.size() > 0:
-		var first_button = buttons[0]
-		first_button.data.add_modifier(mod)
-		first_button.update_visuals()
-		
-		print("Upgraded " + first_button.data.display_name)
-
 func _ready() -> void:
-	print("BattleManager ready")
-	print("Enemy scene:", enemy_scene)
-	print("Calculator UI:", calculator_ui)
 	_update_player_ui(RunManager.current_hp)
 	RunManager.hp_changed.connect(_update_player_ui)
 	calculator_ui.attack_made.connect(_on_player_attack)
@@ -92,24 +67,21 @@ func start_battle():
 	calculator_ui.start_turn(RunManager.deck)
 	
 func spawn_new_enemy():
-	var new_enemy = enemy_scene.instantiate()
-	new_enemy.battle_manager = self 
-	add_child(new_enemy)
-	new_enemy.position = spawn_point.position
-	new_enemy.died.connect(_on_enemy_died)
-	current_enemy = new_enemy
+	var random_encounter = encounter_type.pick_random()
+	for i in random_encounter.encounter_enemies.size():
+		var new_enemy = enemy_scene.instantiate()
+		new_enemy.battle_manager = self
+		new_enemy.data = random_encounter.encounter_enemies[i]
+		new_enemy.global_position = marker_array[i].global_position
+		new_enemy.enemy_clicked.connect(_on_enemy_clicked)
+		new_enemy.died.connect(_on_enemy_died)
+		add_child(new_enemy)
+		current_enemies.append(new_enemy)
 
-func _on_player_attack(damage: int):
-	if is_instance_valid(current_enemy):
-		if current_enemy.current_hp > 0:
-			current_enemy.state_machine.transition("Act")
-			current_enemy.take_damage(damage)
-			calculator_ui.apply_shake()
-			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
-		else:
-			pass
-	else:
-		print("Enemy is already dead")
+func _on_player_attack(payload: AttackPayload):
+	wait_payload = payload
+	number_of_targets = min(payload.aoe_targets, current_enemies.size())
+	clicked_targets.clear()
 	
 func _update_player_ui(new_hp : int):
 	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
@@ -124,31 +96,35 @@ func take_damage(amount: int):
 		game_over()
 
 func _on_turn_ended():
-	if is_instance_valid(current_enemy):
-		if current_enemy.current_hp > 0:
-			current_enemy.state_machine.transition("Act")
-			if(RunManager.deck.size() >= 1):
-				calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-				print("Shuffleando los shuffles")
-			else:
-				calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
+	for enemy in current_enemies:
+		if is_instance_valid(enemy):
+			if enemy.current_hp > 0:
+				enemy.state_machine.transition("Act")
+	if(RunManager.deck.size() >= 1):
+		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+		print("Shuffleando los shuffles")
+	else:
+		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
 			
-func _on_enemy_died():
-	calculator_ui.hide()
-	print("Enemy Defeated!")
-	var random_reward: Array[ItemData] = []
-	for i in range(3):
-		random_reward.append(reward_pool.pick_random())
-	
-	reward_screen.set_rewards(random_reward)
-	var selection = await reward_screen.reward_selected
-	print("Player chose: ", selection[0].display_name, selection[1].display_name)
-	RunManager.add_item_to_deck(selection)
-	calculator_ui.show()
-	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
-	spawn_new_enemy()
-	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-	RunManager.current_hp = RunManager.max_hp
+func _on_enemy_died(enemy: Enemy):
+	current_enemies.erase(enemy)
+	print('Current enemies on the field: ', current_enemies.size())
+	if current_enemies.size() == 0:
+		calculator_ui.hide()
+		print("Enemy Defeated!")
+		var random_reward: Array[ItemData] = []
+		for i in range(3):
+			random_reward.append(reward_pool.pick_random())
+		
+		reward_screen.set_rewards(random_reward)
+		var selection = await reward_screen.reward_selected
+		print("Player chose: ", selection[0].display_name, selection[1].display_name)
+		RunManager.add_item_to_deck(selection)
+		calculator_ui.show()
+		SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
+		spawn_new_enemy()
+		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+		RunManager.current_hp = RunManager.max_hp
 
 func _on_reroll_selected(amountOfRerolls: int):
 	if(amountOfRerolls == 1):
@@ -158,6 +134,30 @@ func _on_reroll_selected(amountOfRerolls: int):
 		reward_screen.set_rewards(random_reward)
 	else:
 		pass
+
+func _on_enemy_clicked(enemy: Enemy):
+	if not clicked_targets.has(enemy):
+		clicked_targets.append(enemy)
+	else:
+		return
+	if clicked_targets.size() == number_of_targets:
+		attack_execute()
+	
+func attack_execute():
+	while wait_payload.hit_count > 0:
+		for target in clicked_targets:
+			if not is_instance_valid(target):
+				continue
+			if target.current_hp <= 0:
+				continue
+			target.state_machine.transition("Act")
+			target.take_damage(wait_payload.base_damage)
+			calculator_ui.apply_shake()
+			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
+			wait_payload.hit_count -= 1
+			await get_tree().create_timer(0.15).timeout
+	if wait_payload.lifesteal_amount > 0:
+			RunManager.modifiy_hp(wait_payload.lifesteal_amount)
 	
 func game_over():
 	await get_tree().create_timer(0.5).timeout

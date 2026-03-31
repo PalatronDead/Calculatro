@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PowerupAction" format=3 uid="uid://btw4cod1kbtpk"]
+
+[ext_resource type="Texture2D" uid="uid://b05k5mlqna83k" path="res://sprites/GuanteCalculatro.png" id="1_4keil"]
+[ext_resource type="Script" uid="uid://coav4lsmlwrm3" path="res://enemy/enemyScripts/actionScripts/powerup_action.gd" id="1_pqtpg"]
+
+[resource]
+script = ExtResource("1_pqtpg")
+name = "Powerup"
+intent_icon = ExtResource("1_4keil")
+metadata/_custom_type_script = "uid://coav4lsmlwrm3"

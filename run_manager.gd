@@ -1,7 +1,7 @@
 extends Node
 
 var max_hp: int = 100
-var current_hp: int = 100
+var current_hp: int
 var deck: Array[ItemData] = []
 var runDeck: Array[ItemData] = []
 
@@ -40,8 +40,10 @@ func add_item_to_deck(itemArray: Array[ItemData]):
 	deck_changed.emit()
 
 func modifiy_hp(amount: int):
+	print("RunManager received heal request for: ", amount)
 	current_hp += amount
 	hp_changed.emit(current_hp)
+	print("Player HP is now: ", current_hp)
 	
 func shuffle_deck(deck: Array[ItemData]) -> Array[ItemData]:
 	deck.shuffle()

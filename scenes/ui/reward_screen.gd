@@ -16,10 +16,14 @@ signal reroll_selected(rerollAmount: int)
 var data: ItemData
 
 func set_rewards(items: Array[ItemData]):
+	amountOfRerolls = 1
+	reroll_label.text = 'Rerolls 0/1'
 	for child in reward_container.get_children():
 			child.queue_free()
+			
+	if not reroll_button.pressed.is_connected(_on_reroll_button_clicked):
+		reroll_button.pressed.connect(_on_reroll_button_clicked)
 	
-	reroll_button.pressed.connect(_on_reroll_button_clicked)
 
 	for item_data in items:
 		var reward_button = item_display_scene.instantiate()
@@ -41,6 +45,7 @@ func _on_button_clicked( item: ItemData, reward_button: ItemDisplay):
 		hide()
 
 func _on_reroll_button_clicked():
+		
 	reroll_selected.emit(amountOfRerolls)
 	reroll_label.text = 'Rerolls 1/1'
 	amountOfRerolls += 1

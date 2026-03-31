@@ -1,25 +1,30 @@
 class_name Enemy extends Node2D
 
-@export var possible_actions: Array[EnemyAction]
+@export var data: EnemyData
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var intent_icon: TextureRect = $IntentIcon
 @onready var intent_label: Label = $IntentLabel
 
-@export var max_hp: int = 100
 var current_hp: int
 
 @onready var hp_label = $HPLabel
 var is_defending: bool = false
 
-signal died
+signal died(enemy_node: Enemy)
+signal enemy_clicked(enemy_node: Enemy)
 
 var current_action: EnemyAction
 var battle_manager
 
 func _ready():
-	current_hp = max_hp
+	if data:
+		setup_enemy()
+	
+func setup_enemy():
+	current_hp = data.max_hp
 	update_ui()
+	$Sprite2D.texture = data.sprite_texture
 	state_machine.start_machine([
 		EnemyChooseState.new(self),
 		EnemyShowIntentState.new(self),
@@ -28,6 +33,7 @@ func _ready():
 
 func take_damage(amount: int):
 	var final_damage = amount
+	print('This is is_defending variable right now: ', is_defending)
 	
 	if is_defending:
 		final_damage = amount / 2
@@ -44,19 +50,26 @@ func take_damage(amount: int):
 		die()
 		
 func update_ui():
-	hp_label.text = str(current_hp) + " / " + str(max_hp)
+	hp_label.text = str(current_hp) + " / " + str(data.max_hp)
 
 func die():
-	died.emit()
+	died.emit(self)
 	queue_free()
 
 func pick_action() -> EnemyAction:
-	return possible_actions.pick_random()
+	return data.actions.pick_random()
 	
 func show_intent():
 	intent_icon.texture = current_action.intent_icon
 	if(current_action.base_value > 0):
 		intent_label.text = str(current_action.base_value)
+	else:
+		intent_label.text = ''
 
 func hide_intent():
 	intent_icon.texture = null
+
+
+func _on_enemy_pressed() -> void:
+	print('The enemy clicked was', data.enemy_name)
+	enemy_clicked.emit(self)

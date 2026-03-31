@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://dvx73ku4lr75p"]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dvx73ku4lr75p"]
 
-[ext_resource type="Script" uid="uid://cm1rt2fikn6wy" path="res://resources/modifier_data.gd" id="1_bphyq"]
+[ext_resource type="Resource" uid="uid://b8d8n5hme1hpc" path="res://resources/OperatorActions/multiply_action.tres" id="1_bphyq"]
 [ext_resource type="Script" uid="uid://4fpm4dhehcso" path="res://resources/item_data.gd" id="2_0pym8"]
 
 [resource]
@@ -8,4 +8,5 @@ script = ExtResource("2_0pym8")
 type = 1
 display_name = "*"
 operator_symbol = "*"
+operator_action = ExtResource("1_bphyq")
 metadata/_custom_type_script = "uid://4fpm4dhehcso"

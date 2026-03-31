@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MultiplyAction" format=3 uid="uid://b8d8n5hme1hpc"]
+
+[ext_resource type="Script" uid="uid://5w0x2n2yiolw" path="res://resources/OperatorActions/multiply_action.gd" id="1_hyiwl"]
+
+[resource]
+script = ExtResource("1_hyiwl")
+metadata/_custom_type_script = "uid://5w0x2n2yiolw"
