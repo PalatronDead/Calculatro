@@ -1,13 +1,32 @@
 [gd_scene format=3 uid="uid://c7xh6d6ju67xx"]
 
 [ext_resource type="Script" uid="uid://bdjajqb776j03" path="res://enemy/enemy.gd" id="1_md0e3"]
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="2_5ffra"]
 [ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="2_md0e3"]
-[ext_resource type="Resource" uid="uid://xibcj83ajtw2" path="res://enemy/enemyResources/enemyTypes/ruler_demon.tres" id="2_p200p"]
+[ext_resource type="Texture2D" uid="uid://cj3dw2pgqmr2c" path="res://sprites/enemyAttackIntentionIcon.png" id="3_e355f"]
+[ext_resource type="Script" uid="uid://wsrcvt7u07mf" path="res://enemy/enemyScripts/actionScripts/attack_action.gd" id="4_78jik"]
 [ext_resource type="Script" uid="uid://b47gb4p5escmg" path="res://Base/state_machine.gd" id="4_p200p"]
+[ext_resource type="Resource" uid="uid://dpg0o8vpi2w0k" path="res://enemy/enemyResources/actionsResources/defend_action.tres" id="5_o3pv7"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="6_xoplw"]
+
+[sub_resource type="Resource" id="Resource_yk5n2"]
+script = ExtResource("4_78jik")
+name = "Attack"
+intent_icon = ExtResource("3_e355f")
+base_value = 5
+metadata/_custom_type_script = "uid://wsrcvt7u07mf"
+
+[sub_resource type="Resource" id="Resource_6yflr"]
+script = ExtResource("6_xoplw")
+enemy_name = "Ruler_Demon"
+max_hp = 100
+sprite_texture = ExtResource("2_md0e3")
+actions = Array[ExtResource("2_5ffra")]([SubResource("Resource_yk5n2"), ExtResource("5_o3pv7")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"
 
 [node name="Enemy" type="Node2D" unique_id=1531219916]
 script = ExtResource("1_md0e3")
-data = ExtResource("2_p200p")
+data = SubResource("Resource_6yflr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=897357784]
 texture_filter = 1

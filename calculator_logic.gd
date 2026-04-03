@@ -1,4 +1,5 @@
 class_name CalculatorLogic extends Node
+var operator_clicked: bool = false
 
 func calculate_sequence(sequence_data: Array[ItemData]) -> AttackPayload:
 	var new_payload = AttackPayload.new()
@@ -10,6 +11,7 @@ func calculate_sequence(sequence_data: Array[ItemData]) -> AttackPayload:
 		if item.type == ItemData.Type.INTEGER:
 			current_number_str += str(item.value)
 		elif item.type == ItemData.Type.OPERATOR:
+			operator_clicked = true
 			if current_number_str != null:
 				if current_operator == null:
 					new_payload.base_damage = int(current_number_str)

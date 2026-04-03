@@ -71,17 +71,21 @@ func _on_execute_pressed():
 	for item in items_used:
 		if item is ItemDisplay:
 			sequence_data.append(item.data)
-			var data: ItemData = item.data
-			RunManager.deck.erase(data)
-			item.queue_free()
 
 	var damage_payload = calculator_logic.calculate_sequence(sequence_data)
 	
 	print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
 	
-	if damage_payload.base_damage > 0:
+			
+	if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
 		attack_made.emit(damage_payload)
 		_clear_equation()
+		calculator_logic.operator_clicked = false
+		for item in items_used:
+			if item is ItemDisplay:
+				var data: ItemData = item.data
+				RunManager.deck.erase(data)
+				item.queue_free()
 	else:
 		print("Invalid Equation")
 		apply_shake()

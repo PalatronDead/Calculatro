@@ -9,7 +9,6 @@ class_name Enemy extends Node2D
 var current_hp: int
 
 @onready var hp_label = $HPLabel
-var is_defending: bool = false
 
 signal died(enemy_node: Enemy)
 signal enemy_clicked(enemy_node: Enemy)
@@ -33,11 +32,9 @@ func setup_enemy():
 
 func take_damage(amount: int):
 	var final_damage = amount
-	print('This is is_defending variable right now: ', is_defending)
 	
-	if is_defending:
+	if current_action.name == 'Defend':
 		final_damage = amount / 2
-		is_defending = false
 
 	current_hp -= final_damage
 	update_ui()

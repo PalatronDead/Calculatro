@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://banrn4esv7lxc"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_jfbal"]
+[ext_resource type="Resource" uid="uid://r85yw46p4rhs" path="res://enemy/enemyResources/actionsResources/attack_action.tres" id="2_byvuy"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_h1jer"]
+[ext_resource type="Resource" uid="uid://dpg0o8vpi2w0k" path="res://enemy/enemyResources/actionsResources/defend_action.tres" id="3_dipvc"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="5_ba8j1"]
+
+[resource]
+script = ExtResource("2_h1jer")
+enemy_name = "Ruler Demon Swarm"
+max_hp = 40
+sprite_texture = ExtResource("5_ba8j1")
+actions = Array[ExtResource("1_jfbal")]([ExtResource("2_byvuy"), ExtResource("3_dipvc")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://e6hjpubm27t3"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_rtg2o"]
+[ext_resource type="Resource" uid="uid://r85yw46p4rhs" path="res://enemy/enemyResources/actionsResources/attack_action.tres" id="2_ymedc"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_yscfw"]
+[ext_resource type="Resource" uid="uid://dpg0o8vpi2w0k" path="res://enemy/enemyResources/actionsResources/defend_action.tres" id="3_t51br"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="5_q4mu1"]
+
+[resource]
+script = ExtResource("2_yscfw")
+enemy_name = "Ruler Demon Duo"
+max_hp = 60
+sprite_texture = ExtResource("5_q4mu1")
+actions = Array[ExtResource("1_rtg2o")]([ExtResource("2_ymedc"), ExtResource("3_t51br")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

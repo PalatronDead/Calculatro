@@ -101,8 +101,19 @@ func _on_turn_ended():
 			if enemy.current_hp > 0:
 				enemy.state_machine.transition("Act")
 	if(RunManager.deck.size() >= 1):
-		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-		print("Shuffleando los shuffles")
+		var number_of_numbers: int
+		var number_of_operators: int
+		for token in RunManager.deck:
+			if token.type == ItemData.Type.INTEGER:
+				number_of_numbers += 1
+			elif token.type == ItemData.Type.OPERATOR:
+				number_of_operators += 1
+		if number_of_numbers >= 2 && number_of_operators >=1:
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+			print("Shuffleando los shuffles")
+		else:
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
+		
 	else:
 		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
 			
@@ -144,20 +155,26 @@ func _on_enemy_clicked(enemy: Enemy):
 		attack_execute()
 	
 func attack_execute():
+	if RunManager.chaos_level >= 2 && (wait_payload.aoe_targets >= 2 || wait_payload.lifesteal_amount >=1 || wait_payload.hit_count >=2):
+		RunManager.modifiy_hp(-5)
 	while wait_payload.hit_count > 0:
+		var are_you_alive: bool = false
 		for target in clicked_targets:
 			if not is_instance_valid(target):
 				continue
 			if target.current_hp <= 0:
 				continue
-			target.state_machine.transition("Act")
+			are_you_alive = true
 			target.take_damage(wait_payload.base_damage)
 			calculator_ui.apply_shake()
 			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
-			wait_payload.hit_count -= 1
-			await get_tree().create_timer(0.15).timeout
+		
+		if are_you_alive == false:
+			break
+		wait_payload.hit_count -= 1
+		await get_tree().create_timer(0.15).timeout
 	if wait_payload.lifesteal_amount > 0:
-			RunManager.modifiy_hp(wait_payload.lifesteal_amount)
+		RunManager.modifiy_hp(wait_payload.lifesteal_amount)
 	
 func game_over():
 	await get_tree().create_timer(0.5).timeout

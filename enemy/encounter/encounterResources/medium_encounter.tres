@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="1_0he2v"]
 [ext_resource type="Script" uid="uid://xtyiu7v0gpso" path="res://enemy/encounter/encounter_data.gd" id="2_cf06q"]
-[ext_resource type="Resource" uid="uid://xibcj83ajtw2" path="res://enemy/enemyResources/enemyTypes/ruler_demon.tres" id="2_e65rg"]
+[ext_resource type="Resource" uid="uid://e6hjpubm27t3" path="res://enemy/enemyResources/enemyTypes/ruler_demon_duo.tres" id="2_e65rg"]
 
 [resource]
 script = ExtResource("2_cf06q")
