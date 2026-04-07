@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 SoundManager="*res://scenes/audio_manager.tscn"
 RunManager="*res://run_manager.gd"
+LootManager="*uid://dpkw5qvspdleg"
 
 [input]
 
