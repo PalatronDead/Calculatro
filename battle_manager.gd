@@ -56,7 +56,7 @@ var reward_pool = [
 func _ready() -> void:
 	_update_player_ui(RunManager.current_hp)
 	RunManager.hp_changed.connect(_update_player_ui)
-	calculator_ui.attack_made.connect(_on_player_attack)
+	calculator_ui.equation_made.connect(_on_equation_made)
 	calculator_ui.turn_ended.connect(_on_turn_ended)
 	reward_screen.reroll_selected.connect(_on_reroll_selected)
 	start_battle()
@@ -86,6 +86,39 @@ func _on_player_attack(payload: AttackPayload):
 func _update_player_ui(new_hp : int):
 	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
 
+func _on_equation_made():
+	var items_used = calculator_ui.equation_container.get_children()
+
+	var sequence_data: Array[ItemData] = []
+	
+	for item in items_used:
+		if item is ItemDisplay:
+			sequence_data.append(item.data)
+			
+	for i in range(sequence_data.size() - 1):
+		if sequence_data[i].display_name == '/' and sequence_data[i + 1].display_name == '0':
+			execute_zero_roulette()
+			return
+		
+			
+	var damage_payload = calculator_logic.calculate_sequence(sequence_data)
+	
+	print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
+	
+			
+	if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
+		_on_player_attack(damage_payload)
+		calculator_ui._clear_equation()
+		calculator_logic.operator_clicked = false
+		for item in items_used:
+			if item is ItemDisplay:
+				var data: ItemData = item.data
+				RunManager.deck.erase(data)
+				item.queue_free()
+	else:
+		print("Invalid Equation")
+		calculator_ui.apply_shake()
+
 func take_damage(amount: int):
 	RunManager.modifiy_hp(-amount)
 	_update_player_ui(RunManager.current_hp)
@@ -94,6 +127,10 @@ func take_damage(amount: int):
 	
 	if RunManager.current_hp <= 0:
 		game_over()
+
+func execute_zero_roulette():
+	RunManager.chaos_level += 1
+	_on_turn_ended()
 
 func _on_turn_ended():
 	for enemy in current_enemies:

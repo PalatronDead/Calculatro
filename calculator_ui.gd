@@ -6,7 +6,7 @@ extends Control
 @export var calculator_logic: Node
 @export var end_turn_button: Button
 
-signal attack_made(payload: AttackPayload)
+signal equation_made
 signal turn_ended
 
 var current_hand_data: Array[ItemData] = []
@@ -64,31 +64,24 @@ func _return_to_hand(data: ItemData, button_instance: ItemDisplay):
 		button_instance.item_selected.connect(_on_hand_item_clicked.bind(button_instance))
 
 func _on_execute_pressed():
-	var items_used = equation_container.get_children()
-
-	var sequence_data: Array[ItemData] = []
-	
-	for item in items_used:
-		if item is ItemDisplay:
-			sequence_data.append(item.data)
-
-	var damage_payload = calculator_logic.calculate_sequence(sequence_data)
-	
-	print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
-	
-			
-	if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
-		attack_made.emit(damage_payload)
-		_clear_equation()
-		calculator_logic.operator_clicked = false
-		for item in items_used:
-			if item is ItemDisplay:
-				var data: ItemData = item.data
-				RunManager.deck.erase(data)
-				item.queue_free()
-	else:
-		print("Invalid Equation")
-		apply_shake()
+	equation_made.emit()
+	#var damage_payload = calculator_logic.calculate_sequence(sequence_data)
+	#
+	#print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
+	#
+			#
+	#if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
+		#attack_made.emit(damage_payload)
+		#_clear_equation()
+		#calculator_logic.operator_clicked = false
+		#for item in items_used:
+			#if item is ItemDisplay:
+				#var data: ItemData = item.data
+				#RunManager.deck.erase(data)
+				#item.queue_free()
+	#else:
+		#print("Invalid Equation")
+		#apply_shake()
 
 func _on_end_turn_pressed():
 	turn_ended.emit()
