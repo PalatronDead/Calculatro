@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyAction" load_steps=3 format=3 uid="uid://db60yoxwkp2tc"]
+[gd_resource type="Resource" script_class="EnemyAction" format=3 uid="uid://db60yoxwkp2tc"]
 
 [ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_fn3pd"]
 [ext_resource type="Texture2D" uid="uid://ck20mwgpe371a" path="res://sprites/CalculatorCalculatro.png" id="1_mtv28"]
