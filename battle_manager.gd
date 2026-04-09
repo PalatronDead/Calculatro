@@ -7,8 +7,11 @@ extends Node
 @export var enemy_scene: PackedScene
 @export var encounter_type: Array[EncounterData]
 @export var marker_array: Array[Marker2D]
+@export var camera: Camera2D
 
 @export var calculator_logic: Node
+
+var roulette_wheel = {"effect_chaos_plus_one": 100, "effect_chaos_spike": 20, "effect_chaos_chaos": 10}
 
 var number_of_targets: int = 0
 var clicked_targets: Array[Node] = []
@@ -23,8 +26,7 @@ var current_player_hp: int
 var shake_strength: float = 0
 
 func _ready() -> void:
-	_update_player_ui(RunManager.current_hp)
-	RunManager.hp_changed.connect(_update_player_ui)
+	calculator_ui._update_player_ui(RunManager.current_hp)
 	calculator_ui.equation_made.connect(_on_equation_made)
 	calculator_ui.turn_ended.connect(_on_turn_ended)
 	reward_screen.reroll_selected.connect(_on_reroll_selected)
@@ -51,9 +53,7 @@ func _on_player_attack(payload: AttackPayload):
 	wait_payload = payload
 	number_of_targets = min(payload.aoe_targets, current_enemies.size())
 	clicked_targets.clear()
-	
-func _update_player_ui(new_hp : int):
-	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
+		
 
 func _on_equation_made():
 	var items_used = calculator_ui.equation_container.get_children()
@@ -86,20 +86,62 @@ func _on_equation_made():
 				item.queue_free()
 	else:
 		print("Invalid Equation")
-		calculator_ui.apply_shake()
+		camera.apply_shake(2.5)
 
 func take_damage(amount: int):
 	RunManager.modifiy_hp(-amount)
-	_update_player_ui(RunManager.current_hp)
-	calculator_ui.apply_shake()
+	calculator_ui._update_player_ui(RunManager.current_hp)
+	camera.apply_shake(15.0)
 	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 	
 	if RunManager.current_hp <= 0:
 		game_over()
 
 func execute_zero_roulette():
+	var total_weight: int = 0
+	for roulette_item in roulette_wheel:
+		total_weight += roulette_wheel[roulette_item]
+	var loot_number = randi_range(1, total_weight)
+	for roulette_item in roulette_wheel:
+		loot_number -= roulette_wheel[roulette_item]
+		if(loot_number <= 0):
+			call(roulette_item)
+			return
+
+func effect_chaos_chaos():
+	RunManager.chaos_level = max(0, RunManager.chaos_level - 1)
+	RunManager.current_hp = randi_range(1, RunManager.max_hp)
+	calculator_ui._update_player_ui(RunManager.current_hp)
+	for enemy in current_enemies:
+		enemy.current_hp = randi_range(1, enemy.data.max_hp)
+		enemy.update_ui()
+	camera.apply_shake(30.0)
+	
+
+func effect_chaos_plus_one():
 	RunManager.chaos_level += 1
 	_on_turn_ended()
+	print('Chaos plus one, dummy, currently at: ', RunManager.chaos_level)
+	camera.apply_shake(25.0)
+
+func effect_chaos_spike():
+	calculator_ui.clear_equation()
+	RunManager.chaos_level = 3
+	calculator_ui.hide()
+	for enemy in current_enemies:
+		enemy.hide()
+	var random_reward: Array[ItemData] = []
+	for i in range(5):
+		random_reward.append(LootManager.manage_loot(preload("res://resources/loot_table_world1.tres")).item)
+	reward_screen.set_rewards(random_reward, 5)
+	var selection = await reward_screen.reward_selected
+	RunManager.add_item_to_deck(selection)
+	print('Bro got chaos spiked, i cant: ', RunManager.chaos_level)
+	calculator_ui.show()
+	for enemy in current_enemies:
+		enemy.show()
+	SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
+	camera.apply_shake(40.0)
 
 func _on_turn_ended():
 	for enemy in current_enemies:
@@ -143,10 +185,10 @@ func _on_enemy_died(enemy: Enemy):
 		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 		RunManager.current_hp = RunManager.max_hp
 
-func _on_reroll_selected(amountOfRerolls: int):
-	if(amountOfRerolls == 1):
+func _on_reroll_selected(amount_rerolls: int, max_rewards: int):
+	if(amount_rerolls == 1):
 		var random_reward: Array[ItemData] = []
-		for i in range(3):
+		for i in range(max_rewards):
 			random_reward.append(LootManager.manage_loot(preload("res://resources/loot_table_world1.tres")).item)
 		reward_screen.set_rewards(random_reward)
 	else:
@@ -172,7 +214,7 @@ func attack_execute():
 				continue
 			are_you_alive = true
 			target.take_damage(wait_payload.base_damage)
-			calculator_ui.apply_shake()
+			camera.apply_shake(5.0)
 			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
 		
 		if are_you_alive == false:

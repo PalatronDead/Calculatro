@@ -5,11 +5,20 @@ extends Control
 @export var execute_button : Button
 @export var calculator_logic: Node
 @export var end_turn_button: Button
+@export var player_hp_label: Label
+@export var player_hp_sprite: AnimatedSprite2D
+@export var camera: Camera2D
+@export var player_hp_particle: CPUParticles2D
 
 signal equation_made
 signal turn_ended
 
 var current_hand_data: Array[ItemData] = []
+
+func _ready() -> void:
+	execute_button.pressed.connect(_on_execute_pressed)
+	end_turn_button.pressed.connect(_on_end_turn_pressed)
+	RunManager.hp_changed.connect(_update_player_ui)
 
 func start_turn(full_deck: Array[ItemData]):
 	var new_hand: Array[ItemData] = []
@@ -39,10 +48,6 @@ func draw_hand(hand_items: Array[ItemData]):
 		btn.setup(item_data)
 		btn.item_selected.connect(_on_hand_item_clicked.bind(btn))
 
-func _ready() -> void:
-	execute_button.pressed.connect(_on_execute_pressed)
-	end_turn_button.pressed.connect(_on_end_turn_pressed)
-
 func _on_hand_item_clicked(data: ItemData, button_instance: ItemDisplay):
 	button_instance.get_parent().remove_child(button_instance)
 	equation_container.add_child(button_instance)
@@ -65,27 +70,36 @@ func _return_to_hand(data: ItemData, button_instance: ItemDisplay):
 
 func _on_execute_pressed():
 	equation_made.emit()
-	#var damage_payload = calculator_logic.calculate_sequence(sequence_data)
-	#
-	#print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
-	#
-			#
-	#if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
-		#attack_made.emit(damage_payload)
-		#_clear_equation()
-		#calculator_logic.operator_clicked = false
-		#for item in items_used:
-			#if item is ItemDisplay:
-				#var data: ItemData = item.data
-				#RunManager.deck.erase(data)
-				#item.queue_free()
-	#else:
-		#print("Invalid Equation")
-		#apply_shake()
 
 func _on_end_turn_pressed():
 	turn_ended.emit()
 	
+func _update_player_ui(new_hp : int):
+	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
+	var hp_percentage: float = float(new_hp) / float(RunManager.max_hp)
+	
+	if hp_percentage > 0.75:
+		player_hp_sprite.frame = 0
+		if hp_percentage == 1:
+			return
+		player_hp_particle.emitting = true
+	elif hp_percentage > 0.50:
+		player_hp_sprite.frame = 1 
+		camera.apply_shake(25.0)
+		player_hp_particle.emitting = true
+	elif hp_percentage > 0.25:
+		player_hp_sprite.frame = 2 
+		camera.apply_shake(25.0)
+		player_hp_particle.emitting = true
+	elif hp_percentage > 0.01:
+		player_hp_sprite.frame = 3 
+		camera.apply_shake(25.0)
+		player_hp_particle.emitting = true
+	else:
+		player_hp_sprite.frame = 4
+		camera.apply_shake(50.0)
+		player_hp_particle.emitting = true
+		
 func _clear_ui():
 	_clear_equation()
 	for slot in hand_slots.get_children():
@@ -98,14 +112,6 @@ func _clear_equation():
 		
 func add_to_deck(new_item: ItemData):
 	RunManager.deck_pool.append(new_item)
-
-func apply_shake():
-	var tween = create_tween()
-	
-	tween.tween_property(self, "position:x", 10.0, 0.05).as_relative()
-	tween.tween_property(self, "position:x", -20.0, 0.05).as_relative()
-	tween.tween_property(self, "position:x", 10.0, 0.05).as_relative()
-	
 	
 func _get_first_empty_hand_slot() -> Control:
 	for slot in hand_slots.get_children():

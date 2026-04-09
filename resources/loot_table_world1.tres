@@ -11,69 +11,78 @@
 [ext_resource type="Resource" uid="uid://s2smwnevobwq" path="res://resources/op_plus.tres" id="8_s03eu"]
 [ext_resource type="Resource" uid="uid://c6bw265w0xjx3" path="res://resources/op_minus.tres" id="9_6il0i"]
 [ext_resource type="Resource" uid="uid://dvx73ku4lr75p" path="res://resources/op_mult.tres" id="10_pdcop"]
-[ext_resource type="Resource" uid="uid://5sy8j3kqadh1" path="res://resources/op_division.tres" id="11_ju8as"]
+[ext_resource type="Resource" uid="uid://bayqutgmi0lqd" path="res://resources/OperatorActions/division_action.tres" id="11_p0dnc"]
+[ext_resource type="Script" uid="uid://4fpm4dhehcso" path="res://resources/item_data.gd" id="12_pdn0x"]
 
-[sub_resource type="Resource" id="Resource_fabxb"]
+[sub_resource type="Resource" id="Resource_68oat"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("2_7nw1p")
 weight = 5
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_fw30u"]
+[sub_resource type="Resource" id="Resource_l8yry"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("3_p0dnc")
 weight = 100
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_wusje"]
+[sub_resource type="Resource" id="Resource_tqirf"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("4_pdn0x")
 weight = 100
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_hxygu"]
+[sub_resource type="Resource" id="Resource_s03eu"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("5_68oat")
 weight = 100
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_eh3et"]
+[sub_resource type="Resource" id="Resource_6il0i"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("6_l8yry")
 weight = 100
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_t7s6d"]
+[sub_resource type="Resource" id="Resource_pdcop"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("7_tqirf")
 weight = 100
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_1xtvw"]
+[sub_resource type="Resource" id="Resource_ju8as"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("8_s03eu")
 weight = 50
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_cqo7h"]
+[sub_resource type="Resource" id="Resource_fabxb"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("9_6il0i")
 weight = 50
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_753eb"]
+[sub_resource type="Resource" id="Resource_fw30u"]
 script = ExtResource("1_2wkuj")
 item = ExtResource("10_pdcop")
 weight = 25
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
-[sub_resource type="Resource" id="Resource_k7bcb"]
+[sub_resource type="Resource" id="Resource_wusje"]
+script = ExtResource("12_pdn0x")
+type = 1
+display_name = "/"
+operator_symbol = "/"
+operator_action = ExtResource("11_p0dnc")
+metadata/_custom_type_script = "uid://4fpm4dhehcso"
+
+[sub_resource type="Resource" id="Resource_hxygu"]
 script = ExtResource("1_2wkuj")
-item = ExtResource("11_ju8as")
+item = SubResource("Resource_wusje")
 weight = 25
 metadata/_custom_type_script = "uid://diuqkrsinmipn"
 
 [resource]
 script = ExtResource("2_35clr")
-loop_items = Array[ExtResource("1_2wkuj")]([SubResource("Resource_fabxb"), SubResource("Resource_fw30u"), SubResource("Resource_wusje"), SubResource("Resource_hxygu"), SubResource("Resource_eh3et"), SubResource("Resource_t7s6d"), SubResource("Resource_1xtvw"), SubResource("Resource_cqo7h"), SubResource("Resource_753eb"), SubResource("Resource_k7bcb")])
+loot_items = Array[ExtResource("1_2wkuj")]([SubResource("Resource_68oat"), SubResource("Resource_l8yry"), SubResource("Resource_tqirf"), SubResource("Resource_s03eu"), SubResource("Resource_6il0i"), SubResource("Resource_pdcop"), SubResource("Resource_ju8as"), SubResource("Resource_fabxb"), SubResource("Resource_fw30u"), SubResource("Resource_hxygu")])
 metadata/_custom_type_script = "uid://ci144bidodpyx"

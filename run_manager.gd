@@ -4,7 +4,7 @@ var max_hp: int = 50
 var current_hp: int
 var deck: Array[ItemData] = []
 var runDeck: Array[ItemData] = []
-var chaos_level: int = 0
+var chaos_level: int = 0 : set = _on_chaos_level_changed
 
 signal hp_changed(new_amount)
 signal deck_changed
@@ -57,10 +57,16 @@ func shuffle_deck(deck: Array[ItemData]) -> Array[ItemData]:
 func return_deck_after_losing_it_all():
 	chaos_level += 1
 	print("Chaos level is now at: ", chaos_level, ", you FOOL")
-	if chaos_level == 3:
-		print("Chaos level reached 3, suffer the CONSEQUENCES")
-		current_hp = current_hp / 2
-		hp_changed.emit(current_hp)
-		
+
 	deck = runDeck.duplicate()
 	return deck
+
+func _on_chaos_level_changed(level):
+		chaos_level = level
+		if chaos_level == 3:
+			print("Chaos level reached 3, suffer the CONSEQUENCES")
+			current_hp = current_hp / 2
+			hp_changed.emit(current_hp)
+			chaos_level = 0
+			
+		

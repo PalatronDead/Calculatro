@@ -11,12 +11,63 @@
 [ext_resource type="Resource" uid="uid://blcar0fjn4b2e" path="res://enemy/encounter/encounterResources/medium_encounter.tres" id="5_irk3j"]
 [ext_resource type="Script" uid="uid://d1yndd3ssp56y" path="res://run_manager.gd" id="6_0yex5"]
 [ext_resource type="Resource" uid="uid://c8lc35llp5gwt" path="res://enemy/encounter/encounterResources/hard_encounter.tres" id="6_l1ooa"]
+[ext_resource type="Texture2D" uid="uid://71kl3065306o" path="res://sprites/Hp_Calculatro_Player.png" id="9_7acxt"]
+[ext_resource type="Texture2D" uid="uid://gomiy5630eag" path="res://sprites/hp_calculatro_particles_player.png" id="10_l1ooa"]
+[ext_resource type="Script" uid="uid://bh8ut2fu0ea33" path="res://scenes/camera.gd" id="12_irk3j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yex5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bsu3s"]
 
-[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "calculator_logic")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_irk3j"]
+atlas = ExtResource("9_7acxt")
+region = Rect2(0, 0, 64, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1ooa"]
+atlas = ExtResource("9_7acxt")
+region = Rect2(64, 0, 64, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtyuj"]
+atlas = ExtResource("9_7acxt")
+region = Rect2(128, 0, 64, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyay3"]
+atlas = ExtResource("9_7acxt")
+region = Rect2(192, 0, 64, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikhwg"]
+atlas = ExtResource("9_7acxt")
+region = Rect2(256, 0, 64, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4gmaf"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irk3j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1ooa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtyuj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyay3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikhwg")
+}],
+"loop": false,
+"name": &"health",
+"speed": 0.0
+}]
+
+[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "camera", "calculator_logic")]
 script = ExtResource("1_28s16")
 calculator_ui = NodePath("UiLayer/CalculatorUI")
 spawn_point = NodePath("FirstEnemyPositionMarker")
@@ -25,11 +76,12 @@ reward_screen = NodePath("Popups/RewardScreen")
 enemy_scene = ExtResource("2_bsu3s")
 encounter_type = Array[ExtResource("3_a4ns4")]([ExtResource("4_7acxt"), ExtResource("5_irk3j"), ExtResource("6_l1ooa")])
 marker_array = [NodePath("FirstEnemyPositionMarker"), NodePath("SecondEnemyPositionMarker"), NodePath("ThirdEnemyPositionMarker")]
+camera = NodePath("Camera2D")
 calculator_logic = NodePath("CalculatorLogic")
 
 [node name="UiLayer" type="CanvasLayer" parent="." unique_id=905362623]
 
-[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button")]
+[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button", "player_hp_label", "player_hp_sprite", "camera", "player_hp_particle")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 580.0
@@ -43,6 +95,10 @@ equation_container = NodePath("EquationSlots")
 execute_button = NodePath("ExecuteButton")
 calculator_logic = NodePath("../../CalculatorLogic")
 end_turn_button = NodePath("EndTurnButton")
+player_hp_label = NodePath("../PlayerHPLabel")
+player_hp_sprite = NodePath("../PlayerHPSprite")
+camera = NodePath("../../Camera2D")
+player_hp_particle = NodePath("../PlayerHPParticle")
 
 [node name="CalculatorBackground" type="Sprite2D" parent="UiLayer/CalculatorUI" unique_id=1216589211]
 texture_filter = 1
@@ -151,10 +207,32 @@ alignment = 1
 [node name="PlayerHPLabel" type="Label" parent="UiLayer" unique_id=1740969633]
 anchors_preset = -1
 anchor_bottom = 0.018000001
-offset_left = 844.0
-offset_top = 1.0
+offset_left = 956.0
+offset_top = -1.0
 offset_right = 1151.0
-offset_bottom = 51.336
+offset_bottom = 49.336
+
+[node name="PlayerHPSprite" type="AnimatedSprite2D" parent="UiLayer" unique_id=1171378170]
+texture_filter = 1
+position = Vector2(1008, 67)
+scale = Vector2(5.507811, 5.361486)
+sprite_frames = SubResource("SpriteFrames_4gmaf")
+animation = &"health"
+
+[node name="PlayerHPParticle" type="CPUParticles2D" parent="UiLayer" unique_id=1238051575]
+position = Vector2(1003, 77)
+emitting = false
+texture = ExtResource("10_l1ooa")
+lifetime = 0.5
+one_shot = true
+emission_shape = 3
+emission_rect_extents = Vector2(28, 8)
+spread = 180.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
 
 [node name="CalculatorLogic" type="Node" parent="." unique_id=1826661270]
 script = ExtResource("3_0yex5")
@@ -175,6 +253,7 @@ visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=536448274]
 position = Vector2(574, 324)
+script = ExtResource("12_irk3j")
 
 [node name="RunManager" type="Node" parent="." unique_id=1617677082]
 script = ExtResource("6_0yex5")
