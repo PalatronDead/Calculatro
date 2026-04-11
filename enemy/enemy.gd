@@ -5,6 +5,12 @@ class_name Enemy extends Node2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var intent_icon: TextureRect = $IntentIcon
 @onready var intent_label: Label = $IntentLabel
+@onready var ghost_bar: TextureProgressBar = $GhostBar
+@onready var health_bar: TextureProgressBar = $HealthBar
+
+var ghost_tween: Tween
+
+
 
 var current_hp: int
 
@@ -18,6 +24,12 @@ var battle_manager
 
 func _ready():
 	if data:
+		ghost_bar.max_value = data.max_hp 
+		health_bar.max_value = data.max_hp
+
+		ghost_bar.value = data.max_hp
+		health_bar.value = data.max_hp
+		print('The maximum value of the HP Bar is: ', health_bar.max_value)
 		setup_enemy()
 	
 func setup_enemy():
@@ -37,11 +49,22 @@ func take_damage(amount: int):
 		final_damage = amount / 2
 
 	current_hp -= final_damage
+	health_bar.value = current_hp
+	print('The aximum value of the HP Bar after getting hit is : ', health_bar.max_value)
+	print('The value of the HP Bar after getting hit is : ', health_bar.value)
+	if ghost_tween and ghost_tween.is_running():
+		ghost_tween.kill()
+		
+	ghost_tween = create_tween()
+	
+	ghost_tween.tween_interval(0.2)
+	
+	ghost_tween.tween_property(ghost_bar, "value", current_hp, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	update_ui()
 	
-	modulate = Color.RED
+	self.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
-	modulate = Color.WHITE
+	self.modulate = Color.WHITE
 	
 	if current_hp <= 0:
 		die()

@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://b47gb4p5escmg" path="res://Base/state_machine.gd" id="4_p200p"]
 [ext_resource type="Resource" uid="uid://dpg0o8vpi2w0k" path="res://enemy/enemyResources/actionsResources/defend_action.tres" id="5_o3pv7"]
 [ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="6_xoplw"]
+[ext_resource type="Texture2D" uid="uid://dxy58ophsjvha" path="res://sprites/Hp_Calculatro_Enemy_GhostBar.png" id="9_o3pv7"]
+[ext_resource type="Texture2D" uid="uid://bi5m71fwactoo" path="res://sprites/Hp_Calculatro_Enemy_HpBar.png" id="10_xoplw"]
+[ext_resource type="Texture2D" uid="uid://ldiksxcgvwkm" path="res://sprites/Hp_Calculatro_Enemy_Border.png" id="11_6yflr"]
 
 [sub_resource type="Resource" id="Resource_yk5n2"]
 script = ExtResource("4_78jik")
@@ -35,10 +38,10 @@ scale = Vector2(4.40625, 2.859375)
 texture = ExtResource("2_md0e3")
 
 [node name="HPLabel" type="Label" parent="." unique_id=470541237]
-offset_left = -31.0
-offset_top = -28.0
-offset_right = 50.0
-offset_bottom = -5.0
+offset_left = -36.0
+offset_top = 23.0
+offset_right = 45.0
+offset_bottom = 46.0
 
 [node name="IntentIcon" type="TextureRect" parent="." unique_id=2022101534]
 offset_left = -35.0
@@ -60,5 +63,31 @@ offset_left = -109.0
 offset_top = -34.0
 offset_right = 138.0
 offset_bottom = 27.0
+
+[node name="GhostBar" type="TextureProgressBar" parent="." unique_id=181341821]
+offset_left = -120.0
+offset_top = -17.0
+offset_right = -56.0
+offset_bottom = 47.0
+scale = Vector2(4, 4)
+mouse_filter = 2
+step = 0.1
+fill_mode = 1
+texture_progress = ExtResource("9_o3pv7")
+texture_progress_offset = Vector2(19, 22)
+
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1781118411]
+texture_filter = 1
+offset_left = -120.0
+offset_top = -17.0
+offset_right = -56.0
+offset_bottom = 47.0
+scale = Vector2(4, 4)
+mouse_filter = 2
+step = 0.1
+fill_mode = 1
+texture_over = ExtResource("11_6yflr")
+texture_progress = ExtResource("10_xoplw")
+texture_progress_offset = Vector2(19, 22)
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_enemy_pressed"]

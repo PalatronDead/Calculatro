@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyru5tb0ceyo5"]
+[gd_scene format=3 uid="uid://cyru5tb0ceyo5"]
 
 [ext_resource type="Script" uid="uid://c6i61wmhdx1iu" path="res://scenes/ui/reward_screen.gd" id="1_omiye"]
 
-[node name="RewardScreen" type="Control"]
+[node name="RewardScreen" type="Control" unique_id=1772294965]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,13 +11,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_omiye")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=2008733542]
 layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 650.0
 metadata/_edit_lock_ = true
 
-[node name="RewardContainer" type="HBoxContainer" parent="."]
+[node name="RewardContainer" type="HBoxContainer" parent="." unique_id=347657785]
 custom_minimum_size = Vector2(56, 31)
 layout_mode = 1
 anchors_preset = -1
@@ -34,7 +34,7 @@ grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="."]
+[node name="TitleLabel" type="Label" parent="." unique_id=1095496892]
 layout_mode = 0
 offset_left = 282.0
 offset_top = 62.0
@@ -43,7 +43,7 @@ offset_bottom = 136.0
 theme_override_font_sizes/font_size = 54
 text = "Choose your Reward"
 
-[node name="RewardLabel" type="Label" parent="."]
+[node name="RewardLabel" type="Label" parent="." unique_id=4106517]
 layout_mode = 0
 offset_left = 373.0
 offset_top = 134.0
@@ -52,7 +52,7 @@ offset_bottom = 200.0
 theme_override_font_sizes/font_size = 34
 text = "Rewards Collected 0/2"
 
-[node name="RerollButton" type="Button" parent="."]
+[node name="RerollButton" type="Button" parent="." unique_id=1041958552]
 layout_mode = 0
 offset_left = 440.0
 offset_top = 454.0
@@ -61,7 +61,7 @@ offset_bottom = 519.0
 theme_override_font_sizes/font_size = 34
 text = "Reroll"
 
-[node name="RerollLabel" type="Label" parent="."]
+[node name="RerollLabel" type="Label" parent="." unique_id=2141823318]
 layout_mode = 0
 offset_left = 485.0
 offset_top = 546.0

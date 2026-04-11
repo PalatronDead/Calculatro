@@ -244,7 +244,7 @@ position = Vector2(178, 132)
 position = Vector2(459, 137)
 
 [node name="ThirdEnemyPositionMarker" type="Marker2D" parent="." unique_id=683107923]
-position = Vector2(318, 254)
+position = Vector2(314, 299)
 
 [node name="Popups" type="CanvasLayer" parent="." unique_id=1941701637]
 

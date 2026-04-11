@@ -15,10 +15,8 @@ func _ready():
 func start_new_run():
 	current_hp = max_hp
 	deck = [
-	preload("res://resources/number_zero.tres"),
-	preload("res://resources/number_zero.tres"),
-	#preload("res://resources/number_one.tres"),
-	#preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
+	preload("res://resources/number_one.tres"),
 	preload("res://resources/number_one.tres"),
 	preload("res://resources/number_two.tres"),
 	preload("res://resources/number_two.tres"),
@@ -32,10 +30,8 @@ func start_new_run():
 	preload("res://resources/op_plus.tres"),
 	preload("res://resources/op_plus.tres"),
 	preload("res://resources/op_plus.tres"),
-	preload("res://resources/op_division.tres"),
-	preload("res://resources/op_division.tres"),
-	#preload("res://resources/op_plus.tres"),
-	#preload("res://resources/op_plus.tres"),
+	preload("res://resources/op_plus.tres"),
+	preload("res://resources/op_plus.tres"),
 ]
 	runDeck = deck.duplicate()
 	

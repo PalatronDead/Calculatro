@@ -125,7 +125,7 @@ func effect_chaos_plus_one():
 	camera.apply_shake(25.0)
 
 func effect_chaos_spike():
-	calculator_ui.clear_equation()
+	calculator_ui._clear_equation()
 	RunManager.chaos_level = 3
 	calculator_ui.hide()
 	for enemy in current_enemies:
@@ -188,7 +188,7 @@ func _on_enemy_died(enemy: Enemy):
 func _on_reroll_selected(amount_rerolls: int, max_rewards: int):
 	if(amount_rerolls == 1):
 		var random_reward: Array[ItemData] = []
-		for i in range(max_rewards):
+		for i in range(max_rewards + 1):
 			random_reward.append(LootManager.manage_loot(preload("res://resources/loot_table_world1.tres")).item)
 		reward_screen.set_rewards(random_reward)
 	else:
