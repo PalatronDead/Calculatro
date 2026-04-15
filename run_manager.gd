@@ -42,7 +42,7 @@ func add_item_to_deck(itemArray: Array[ItemData]):
 
 func modifiy_hp(amount: int):
 	print("RunManager received heal request for: ", amount)
-	current_hp += amount
+	current_hp = clamp(current_hp + amount, 0, max_hp)
 	hp_changed.emit(current_hp)
 	print("Player HP is now: ", current_hp)
 	

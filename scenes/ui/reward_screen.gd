@@ -13,7 +13,7 @@ var amount_rerolls: int = 1
 var rewardsArray: Array[ItemData]
 
 signal reward_selected(item: ItemData)
-signal reroll_selected(reroll_amount: int, max_rewards: int)
+signal reroll_selected(reroll_amount: int, current_reward: int, max_reward: int)
 
 var data: ItemData
 
@@ -53,7 +53,7 @@ func _on_button_clicked( item: ItemData, reward_button: ItemDisplay):
 		hide()
 
 func _on_reroll_button_clicked():
-	reroll_selected.emit(amount_rerolls, max_rewards)
+	reroll_selected.emit(amount_rerolls, current_rewards, max_rewards)
 	reroll_label.text = 'Rerolls 1/1'
 	amount_rerolls += 1
 		

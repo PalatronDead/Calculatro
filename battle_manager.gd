@@ -177,20 +177,21 @@ func _on_enemy_died(enemy: Enemy):
 		
 		reward_screen.set_rewards(random_reward)
 		var selection = await reward_screen.reward_selected
-		print("Player chose: ", selection[0].display_name, selection[1].display_name)
 		RunManager.add_item_to_deck(selection)
 		calculator_ui.show()
 		SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 		spawn_new_enemy()
 		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
 		RunManager.current_hp = RunManager.max_hp
+		calculator_ui._update_player_ui(RunManager.current_hp)
+		
 
-func _on_reroll_selected(amount_rerolls: int, max_rewards: int):
+func _on_reroll_selected(amount_rerolls: int, current_rewards: int, max_rewards: int):
 	if(amount_rerolls == 1):
 		var random_reward: Array[ItemData] = []
 		for i in range(max_rewards + 1):
 			random_reward.append(LootManager.manage_loot(preload("res://resources/loot_table_world1.tres")).item)
-		reward_screen.set_rewards(random_reward)
+		reward_screen.set_rewards(random_reward, (max_rewards - current_rewards))
 	else:
 		pass
 
