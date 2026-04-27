@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://0hlurvu605jw"]
+
+[ext_resource type="Script" uid="uid://cnx5rjdtfnqjy" path="res://scenes/ui/shop_item_display.gd" id="1_j3rpj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j3rpj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ix61g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3boeq"]
+
+[node name="ShopItemDisplay" type="Button" unique_id=1945858621]
+custom_minimum_size = Vector2(300, 200)
+anchors_preset = -1
+anchor_right = 0.26000002
+anchor_bottom = 0.30900002
+offset_right = 0.47998047
+offset_bottom = -0.23200989
+size_flags_horizontal = 3
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_j3rpj")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ix61g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3boeq")
+script = ExtResource("1_j3rpj")
+
+[node name="DescriptionLabel" type="Label" parent="." unique_id=1428315124]
+layout_mode = 0
+offset_top = 123.0
+offset_right = 298.0
+offset_bottom = 198.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TitleLabel" type="Label" parent="." unique_id=543715980]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 52.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShopItemSprite" type="Sprite2D" parent="." unique_id=1355459864]
+
+[node name="CostLabel" type="Label" parent="." unique_id=148264836]
+layout_mode = 0
+offset_left = 255.0
+offset_right = 299.0
+offset_bottom = 52.0
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://eiaqk54oj564"]
+
+[ext_resource type="Script" uid="uid://bvu4uev17vpo4" path="res://scenes/shop_screen.gd" id="1_ca2qj"]
+
+[node name="ShopScreen" type="Control" unique_id=686466695]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ca2qj")
+
+[node name="Background" type="Panel" parent="." unique_id=1675001492]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 645.0
+
+[node name="TitleLabel" type="Label" parent="." unique_id=833340120]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 58.0
+offset_right = 641.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 54
+text = "SHOP"
+
+[node name="CurrencyLabel" type="Label" parent="." unique_id=492579687]
+layout_mode = 0
+offset_left = 926.0
+offset_top = 5.0
+offset_right = 1149.0
+offset_bottom = 81.0
+
+[node name="ShopItemsContainer" type="HBoxContainer" parent="." unique_id=1446453623]
+custom_minimum_size = Vector2(56, 31)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.081
+anchor_top = 0.279
+anchor_right = 0.92600006
+anchor_bottom = 0.66200006
+offset_left = -0.31199646
+offset_top = 0.20799255
+offset_right = 0.2479248
+offset_bottom = 0.023956299
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="NextBattleButton" type="Button" parent="." unique_id=278899823]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.007
+anchor_bottom = 0.006
+offset_left = 453.0
+offset_top = 506.0
+offset_right = 677.936
+offset_bottom = 589.112
+theme_override_font_sizes/font_size = 34
+text = "Next Battle"
+
+[connection signal="pressed" from="NextBattleButton" to="." method="_on_next_battle_button_pressed"]
