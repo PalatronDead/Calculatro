@@ -8,6 +8,7 @@ extends Node
 @export var encounter_type: Array[EncounterData]
 @export var marker_array: Array[Marker2D]
 @export var camera: Camera2D
+@export var shop_screen: Control
 
 @export var calculator_logic: Node
 
@@ -27,11 +28,13 @@ var shake_strength: float = 0
 
 func _ready() -> void:
 	calculator_ui._update_player_ui(RunManager.current_hp)
+	shop_screen.next_battle.connect(_on_next_battle)
 	calculator_ui.equation_made.connect(_on_equation_made)
 	calculator_ui.turn_ended.connect(_on_turn_ended)
 	reward_screen.reroll_selected.connect(_on_reroll_selected)
-	start_battle()
 	
+	RunManager.item_added.connect(_on_item_added)
+	start_battle()
 
 func start_battle():
 	spawn_new_enemy()
@@ -63,6 +66,7 @@ func _on_equation_made():
 	for item in items_used:
 		if item is ItemDisplay:
 			sequence_data.append(item.data)
+			print(item.data)
 			
 	for i in range(sequence_data.size() - 1):
 		if sequence_data[i].display_name == '/' and sequence_data[i + 1].display_name == '0':
@@ -73,7 +77,7 @@ func _on_equation_made():
 	var damage_payload = calculator_logic.calculate_sequence(sequence_data)
 	
 	print("Damage: ", damage_payload.base_damage, " | Hits: ", damage_payload.hit_count, " | Lifesteal: ", damage_payload.lifesteal_amount)
-	
+	print("the sequence of data is: ", sequence_data)
 			
 	if damage_payload.base_damage > 0 && calculator_logic.operator_clicked == true:
 		_on_player_attack(damage_payload)
@@ -168,6 +172,8 @@ func _on_turn_ended():
 func _on_enemy_died(enemy: Enemy):
 	current_enemies.erase(enemy)
 	print('Current enemies on the field: ', current_enemies.size())
+	var money_dropped = randi_range(5, 15)
+	RunManager.add_currency(money_dropped)
 	if current_enemies.size() == 0:
 		calculator_ui.hide()
 		print("Enemy Defeated!")
@@ -178,20 +184,34 @@ func _on_enemy_died(enemy: Enemy):
 		reward_screen.set_rewards(random_reward)
 		var selection = await reward_screen.reward_selected
 		RunManager.add_item_to_deck(selection)
-		calculator_ui.show()
-		SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
-		spawn_new_enemy()
-		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-		RunManager.current_hp = RunManager.max_hp
-		calculator_ui._update_player_ui(RunManager.current_hp)
-		
+		var route = await reward_screen.route_selected
+		if route == 'shop':
+			var shop_table = preload("res://resources/shop_loot_table_world1.tres")
+			var shelf_items = LootManager.get_shop_items(shop_table, 3)
+			shop_screen.open_shop(shelf_items)
+			await shop_screen.next_battle
+		elif route == 'battle':	
+			calculator_ui.show()
+			#SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
+			spawn_new_enemy()
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+			RunManager.current_hp = RunManager.max_hp
+			calculator_ui._update_player_ui(RunManager.current_hp)
+
+func _on_next_battle():
+	calculator_ui.show()
+		#SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
+	spawn_new_enemy()
+	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+	RunManager.current_hp = RunManager.max_hp
+	calculator_ui._update_player_ui(RunManager.current_hp)	
 
 func _on_reroll_selected(amount_rerolls: int, current_rewards: int, max_rewards: int):
 	if(amount_rerolls == 1):
 		var random_reward: Array[ItemData] = []
 		for i in range(max_rewards + 1):
 			random_reward.append(LootManager.manage_loot(preload("res://resources/loot_table_world1.tres")).item)
-		reward_screen.set_rewards(random_reward, (max_rewards - current_rewards))
+		reward_screen.set_rewards(random_reward, (max_rewards - current_rewards), true)
 	else:
 		pass
 
@@ -223,8 +243,22 @@ func attack_execute():
 		wait_payload.hit_count -= 1
 		await get_tree().create_timer(0.15).timeout
 	if wait_payload.lifesteal_amount > 0:
-		RunManager.modifiy_hp(wait_payload.lifesteal_amount)
-	
+		if RunManager.current_items.has(preload("res://resources/Items/PassiveItems/minus_monster.tres")):
+			RunManager.modifiy_hp(wait_payload.lifesteal_amount * 2)
+		else:	
+			RunManager.modifiy_hp(wait_payload.lifesteal_amount)
+
+func _on_item_added(passiveItem: PassiveItemData):
+	if passiveItem.name == "Papaya":
+		RunManager.max_hp += 5
+		calculator_ui._update_player_ui(RunManager.max_hp)
+	elif passiveItem.name == "Manzana":
+		RunManager.max_hp += 10
+		calculator_ui._update_player_ui(RunManager.max_hp)	
+	elif passiveItem.name == "Uvas":
+		RunManager.max_hp += 15
+		calculator_ui._update_player_ui(RunManager.max_hp)	
+
 func game_over():
 	await get_tree().create_timer(0.5).timeout
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

@@ -5,15 +5,20 @@ var current_hp: int
 var deck: Array[ItemData] = []
 var runDeck: Array[ItemData] = []
 var chaos_level: int = 0 : set = _on_chaos_level_changed
+var current_currency: int = 0
+var current_items: Array[PassiveItemData] = []
 
 signal hp_changed(new_amount)
 signal deck_changed
+signal currency_changed
+signal item_added(passiveItem: PassiveItemData)
 
 func _ready():
 	start_new_run()
 
 func start_new_run():
 	current_hp = max_hp
+	current_currency = 0
 	deck = [
 	preload("res://resources/number_one.tres"),
 	preload("res://resources/number_one.tres"),
@@ -37,6 +42,8 @@ func start_new_run():
 	
 func add_item_to_deck(itemArray: Array[ItemData]):
 	deck.append_array(itemArray)
+	print("This are the rewards that were picked: " ,itemArray)
+	print('This is the deck after taking the rewards: ', deck)
 	runDeck.append_array(itemArray)
 	deck_changed.emit()
 
@@ -57,6 +64,19 @@ func return_deck_after_losing_it_all():
 	deck = runDeck.duplicate()
 	return deck
 
+func add_currency(currency: int):
+	current_currency += currency
+	currency_changed.emit(current_currency)
+	
+func add_passive_item(passive_item: PassiveItemData):
+	current_items.append(passive_item)
+	item_added.emit(passive_item)
+	print('New item has been added, the name is: ' , passive_item.name)
+
+func spend_currency(amount: int):
+	current_currency -= amount
+	currency_changed.emit(current_currency)
+
 func _on_chaos_level_changed(level):
 		chaos_level = level
 		if chaos_level == 3:
@@ -65,4 +85,5 @@ func _on_chaos_level_changed(level):
 			hp_changed.emit(current_hp)
 			chaos_level = 0
 			
+		
 		

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ShopLootTable" format=3 uid="uid://copsai7465ksb"]
 
-[ext_resource type="Script" uid="uid://xhcqv3kfxs05" path="res://resources/shop_loot_table.gd" id="1_0gen8"]
-[ext_resource type="Script" uid="uid://dixlnavopj3pt" path="res://resources/shop_loot_item.gd" id="2_nl8qg"]
+[ext_resource type="Script" uid="uid://86j6suvjla4j" path="res://resources/shop_loot_table.gd" id="1_0gen8"]
+[ext_resource type="Script" uid="uid://b13qxc8qhps0y" path="res://resources/shop_loot_item.gd" id="2_nl8qg"]
 [ext_resource type="Resource" uid="uid://ya8taanfitqi" path="res://resources/Items/PassiveItems/minus_monster.tres" id="3_fuv7u"]
 [ext_resource type="Script" uid="uid://b147um7nfwhn2" path="res://resources/Items/PassiveItems/passive_item_data.gd" id="4_6m2c7"]
 [ext_resource type="Resource" uid="uid://r4j2cvq7r5wa" path="res://resources/Items/PassiveItems/manzana.tres" id="5_symnx"]
@@ -15,7 +15,6 @@ metadata/_custom_type_script = "uid://dixlnavopj3pt"
 
 [sub_resource type="Resource" id="Resource_abj7g"]
 script = ExtResource("4_6m2c7")
-name = "Papaya"
 cost = 23
 description = "This item gives you +5 max hp "
 metadata/_custom_type_script = "uid://b147um7nfwhn2"

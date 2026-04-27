@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://71kl3065306o" path="res://sprites/Hp_Calculatro_Player.png" id="9_7acxt"]
 [ext_resource type="Texture2D" uid="uid://gomiy5630eag" path="res://sprites/hp_calculatro_particles_player.png" id="10_l1ooa"]
 [ext_resource type="Script" uid="uid://bh8ut2fu0ea33" path="res://scenes/camera.gd" id="12_irk3j"]
+[ext_resource type="PackedScene" path="res://scenes/shop_screen.tscn" id="13_vtyuj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yex5"]
 
@@ -67,7 +68,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "camera", "calculator_logic")]
+[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "camera", "shop_screen", "calculator_logic")]
 script = ExtResource("1_28s16")
 calculator_ui = NodePath("UiLayer/CalculatorUI")
 spawn_point = NodePath("FirstEnemyPositionMarker")
@@ -77,6 +78,7 @@ enemy_scene = ExtResource("2_bsu3s")
 encounter_type = Array[ExtResource("3_a4ns4")]([ExtResource("4_7acxt"), ExtResource("5_irk3j"), ExtResource("6_l1ooa")])
 marker_array = [NodePath("FirstEnemyPositionMarker"), NodePath("SecondEnemyPositionMarker"), NodePath("ThirdEnemyPositionMarker")]
 camera = NodePath("Camera2D")
+shop_screen = NodePath("Popups/ShopScreen")
 calculator_logic = NodePath("CalculatorLogic")
 
 [node name="UiLayer" type="CanvasLayer" parent="." unique_id=905362623]
@@ -250,6 +252,8 @@ position = Vector2(314, 299)
 
 [node name="RewardScreen" parent="Popups" unique_id=1694986749 instance=ExtResource("4_28s16")]
 visible = false
+
+[node name="ShopScreen" parent="Popups" unique_id=686466695 instance=ExtResource("13_vtyuj")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=536448274]
 position = Vector2(574, 324)

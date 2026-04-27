@@ -69,3 +69,33 @@ offset_right = 627.0
 offset_bottom = 618.0
 theme_override_font_sizes/font_size = 28
 text = "Rerolls 0/1"
+
+[node name="ShopButton" type="Button" parent="." unique_id=733253251]
+layout_mode = 0
+offset_left = 282.0
+offset_top = 256.0
+offset_right = 498.0
+offset_bottom = 356.0
+theme_override_font_sizes/font_size = 34
+text = "Go to Shop"
+
+[node name="NextBattleButton" type="Button" parent="." unique_id=838861627]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 259.0
+offset_right = 863.0
+offset_bottom = 359.0
+theme_override_font_sizes/font_size = 34
+text = "Go Next"
+
+[node name="RouteLabel" type="Label" parent="." unique_id=1668072736]
+layout_mode = 0
+offset_left = 354.0
+offset_top = 66.0
+offset_right = 796.0
+offset_bottom = 162.0
+theme_override_font_sizes/font_size = 54
+text = "Stage Completed"
+
+[connection signal="pressed" from="ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="NextBattleButton" to="." method="_on_next_battle_button_pressed"]
