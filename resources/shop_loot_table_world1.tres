@@ -2,42 +2,44 @@
 
 [ext_resource type="Script" uid="uid://86j6suvjla4j" path="res://resources/shop_loot_table.gd" id="1_0gen8"]
 [ext_resource type="Script" uid="uid://b13qxc8qhps0y" path="res://resources/shop_loot_item.gd" id="2_nl8qg"]
-[ext_resource type="Resource" uid="uid://ya8taanfitqi" path="res://resources/Items/PassiveItems/minus_monster.tres" id="3_fuv7u"]
 [ext_resource type="Script" uid="uid://b147um7nfwhn2" path="res://resources/Items/PassiveItems/passive_item_data.gd" id="4_6m2c7"]
-[ext_resource type="Resource" uid="uid://r4j2cvq7r5wa" path="res://resources/Items/PassiveItems/manzana.tres" id="5_symnx"]
-[ext_resource type="Resource" uid="uid://b6vb6o3r32btr" path="res://resources/Items/PassiveItems/uva.tres" id="6_fejtd"]
+[ext_resource type="Resource" path="res://resources/Items/PassiveItems/manzana.tres" id="5_symnx"]
+[ext_resource type="Resource" path="res://resources/Items/PassiveItems/uva.tres" id="6_fejtd"]
 
-[sub_resource type="Resource" id="Resource_g3418"]
-script = ExtResource("2_nl8qg")
-shop_item = ExtResource("3_fuv7u")
-weight = 75
-metadata/_custom_type_script = "uid://dixlnavopj3pt"
-
-[sub_resource type="Resource" id="Resource_abj7g"]
+[sub_resource type="Resource" id="Resource_tsh0b"]
 script = ExtResource("4_6m2c7")
+name = "Minus Monster"
+cost = 50
+description = "This item doubles the healing obtained when using the - operator"
+metadata/_custom_type_script = "uid://b147um7nfwhn2"
+
+[sub_resource type="Resource" id="Resource_6m2c7"]
+script = ExtResource("2_nl8qg")
+shop_item = SubResource("Resource_tsh0b")
+weight = 75
+
+[sub_resource type="Resource" id="Resource_symnx"]
+script = ExtResource("4_6m2c7")
+name = "Papaya"
 cost = 23
 description = "This item gives you +5 max hp "
 metadata/_custom_type_script = "uid://b147um7nfwhn2"
 
-[sub_resource type="Resource" id="Resource_pdixs"]
+[sub_resource type="Resource" id="Resource_fejtd"]
 script = ExtResource("2_nl8qg")
-shop_item = SubResource("Resource_abj7g")
+shop_item = SubResource("Resource_symnx")
 weight = 100
-metadata/_custom_type_script = "uid://dixlnavopj3pt"
 
 [sub_resource type="Resource" id="Resource_621rn"]
 script = ExtResource("2_nl8qg")
 shop_item = ExtResource("5_symnx")
 weight = 75
-metadata/_custom_type_script = "uid://dixlnavopj3pt"
 
 [sub_resource type="Resource" id="Resource_udgcd"]
 script = ExtResource("2_nl8qg")
 shop_item = ExtResource("6_fejtd")
 weight = 50
-metadata/_custom_type_script = "uid://dixlnavopj3pt"
 
 [resource]
 script = ExtResource("1_0gen8")
-shop_loot_items = Array[ExtResource("2_nl8qg")]([SubResource("Resource_g3418"), SubResource("Resource_pdixs"), SubResource("Resource_621rn"), SubResource("Resource_udgcd")])
-metadata/_custom_type_script = "uid://xhcqv3kfxs05"
+shop_loot_items = Array[ExtResource("2_nl8qg")]([SubResource("Resource_6m2c7"), SubResource("Resource_fejtd"), SubResource("Resource_621rn"), SubResource("Resource_udgcd")])

@@ -51,6 +51,7 @@ func set_rewards(items: Array[ItemData], allowed_amount_rewards: int = 2, is_rer
 	reward_container.show()
 	reroll_button.show()
 	title_label.show()
+	reroll_label.show()
 	show()
 		
 func _on_button_clicked( item: ItemData, reward_button: ItemDisplay):

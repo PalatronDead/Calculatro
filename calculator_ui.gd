@@ -9,6 +9,8 @@ extends Control
 @export var player_hp_sprite: AnimatedSprite2D
 @export var camera: Camera2D
 @export var player_hp_particle: CPUParticles2D
+@export var chaos_orb_container:HBoxContainer
+@export var chaos_orb_scene: PackedScene
 
 signal equation_made
 signal turn_ended
@@ -19,6 +21,7 @@ func _ready() -> void:
 	execute_button.pressed.connect(_on_execute_pressed)
 	end_turn_button.pressed.connect(_on_end_turn_pressed)
 	RunManager.hp_changed.connect(_update_player_ui)
+	RunManager.chaos_level_changed.connect(_on_chaos_level_changed)
 
 func start_turn(full_deck: Array[ItemData]):
 	var new_hand: Array[ItemData] = []
@@ -112,6 +115,10 @@ func _clear_equation():
 		
 func add_to_deck(new_item: ItemData):
 	RunManager.deck_pool.append(new_item)
+	
+func _on_chaos_level_changed():
+	var chaos_orb = chaos_orb_scene.instantiate()
+	chaos_orb_container.add_child(chaos_orb)
 	
 func _get_first_empty_hand_slot() -> Control:
 	for slot in hand_slots.get_children():

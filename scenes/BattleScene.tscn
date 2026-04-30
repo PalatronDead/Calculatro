@@ -12,9 +12,10 @@
 [ext_resource type="Script" uid="uid://d1yndd3ssp56y" path="res://run_manager.gd" id="6_0yex5"]
 [ext_resource type="Resource" uid="uid://c8lc35llp5gwt" path="res://enemy/encounter/encounterResources/hard_encounter.tres" id="6_l1ooa"]
 [ext_resource type="Texture2D" uid="uid://71kl3065306o" path="res://sprites/Hp_Calculatro_Player.png" id="9_7acxt"]
+[ext_resource type="PackedScene" uid="uid://dc6266tuk85go" path="res://scenes/ui/chaos_orb.tscn" id="9_lyay3"]
 [ext_resource type="Texture2D" uid="uid://gomiy5630eag" path="res://sprites/hp_calculatro_particles_player.png" id="10_l1ooa"]
 [ext_resource type="Script" uid="uid://bh8ut2fu0ea33" path="res://scenes/camera.gd" id="12_irk3j"]
-[ext_resource type="PackedScene" path="res://scenes/shop_screen.tscn" id="13_vtyuj"]
+[ext_resource type="PackedScene" uid="uid://eiaqk54oj564" path="res://scenes/shop_screen.tscn" id="13_vtyuj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yex5"]
 
@@ -83,7 +84,7 @@ calculator_logic = NodePath("CalculatorLogic")
 
 [node name="UiLayer" type="CanvasLayer" parent="." unique_id=905362623]
 
-[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button", "player_hp_label", "player_hp_sprite", "camera", "player_hp_particle")]
+[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button", "player_hp_label", "player_hp_sprite", "camera", "player_hp_particle", "chaos_orb_container")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 580.0
@@ -101,10 +102,12 @@ player_hp_label = NodePath("../PlayerHPLabel")
 player_hp_sprite = NodePath("../PlayerHPSprite")
 camera = NodePath("../../Camera2D")
 player_hp_particle = NodePath("../PlayerHPParticle")
+chaos_orb_container = NodePath("ChaosOrbContainer")
+chaos_orb_scene = ExtResource("9_lyay3")
 
 [node name="CalculatorBackground" type="Sprite2D" parent="UiLayer/CalculatorUI" unique_id=1216589211]
 texture_filter = 1
-position = Vector2(246, 126)
+position = Vector2(267, 227)
 scale = Vector2(8.015625, 6.2656245)
 texture = ExtResource("3_ftvu5")
 
@@ -116,65 +119,65 @@ anchor_bottom = 1.0
 offset_left = 7.0
 offset_top = 7.0
 offset_right = 7.0
-offset_bottom = 7.0
+offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Slot1" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=1150965491]
 anchors_preset = 0
-offset_left = 135.0
-offset_top = 150.0
-offset_right = 191.0
-offset_bottom = 181.0
+offset_left = 155.0
+offset_top = 250.0
+offset_right = 211.0
+offset_bottom = 281.0
 
 [node name="Slot2" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=1287382148]
 anchors_preset = 0
-offset_left = 207.0
-offset_top = 150.0
-offset_right = 263.0
-offset_bottom = 181.0
+offset_left = 228.0
+offset_top = 251.0
+offset_right = 284.0
+offset_bottom = 282.0
 
 [node name="Slot3" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=1040406780]
 anchors_preset = 0
-offset_left = 279.0
-offset_top = 150.0
-offset_right = 335.0
-offset_bottom = 181.0
+offset_left = 301.0
+offset_top = 250.0
+offset_right = 357.0
+offset_bottom = 281.0
 
 [node name="Slot4" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=155266393]
 anchors_preset = 0
-offset_left = 135.0
-offset_top = 194.0
-offset_right = 191.0
-offset_bottom = 225.0
+offset_left = 156.0
+offset_top = 295.0
+offset_right = 212.0
+offset_bottom = 326.0
 
 [node name="Slot5" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=253535407]
 anchors_preset = 0
-offset_left = 206.0
-offset_top = 194.0
-offset_right = 263.0
-offset_bottom = 226.0
+offset_left = 228.0
+offset_top = 295.0
+offset_right = 285.0
+offset_bottom = 327.0
 
 [node name="Slot6" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=1574200362]
 anchors_preset = 0
-offset_left = 279.0
-offset_top = 194.0
-offset_right = 336.0
-offset_bottom = 225.0
+offset_left = 300.0
+offset_top = 296.0
+offset_right = 357.0
+offset_bottom = 327.0
 
 [node name="Slot7" type="Control" parent="UiLayer/CalculatorUI/HandSlots" unique_id=512525270]
 anchors_preset = 0
-offset_left = 135.0
-offset_top = 238.0
-offset_right = 191.0
-offset_bottom = 269.0
+offset_left = 157.0
+offset_top = 338.0
+offset_right = 213.0
+offset_bottom = 369.0
 
 [node name="EndTurnButton" type="Button" parent="UiLayer/CalculatorUI" unique_id=1954167211]
 layout_mode = 0
-offset_left = 287.0
-offset_top = 246.0
-offset_right = 343.0
-offset_bottom = 277.0
+offset_left = 307.0
+offset_top = 346.0
+offset_right = 363.0
+offset_bottom = 377.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxEmpty_0yex5")
@@ -183,10 +186,10 @@ text = "END
 
 [node name="ExecuteButton" type="Button" parent="UiLayer/CalculatorUI" unique_id=57878307]
 layout_mode = 0
-offset_left = 214.0
-offset_top = 246.0
-offset_right = 269.0
-offset_bottom = 277.0
+offset_left = 237.0
+offset_top = 345.0
+offset_right = 292.0
+offset_bottom = 376.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bsu3s")
@@ -196,15 +199,23 @@ text = "KILL"
 custom_minimum_size = Vector2(56, 31)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.76000005
-anchor_top = 0.049000002
-anchor_right = 0.76000005
-anchor_bottom = 0.049000002
-offset_left = -227.96002
-offset_top = 12.841
-offset_right = -41.960022
-offset_bottom = 94.84099
+anchor_left = 0.532
+anchor_top = 0.44500002
+anchor_right = 0.532
+anchor_bottom = 0.44500002
+offset_left = -92.87201
+offset_top = -40.99501
+offset_right = 93.12799
+offset_bottom = 41.004974
 alignment = 1
+
+[node name="ChaosOrbContainer" type="HBoxContainer" parent="UiLayer/CalculatorUI" unique_id=663944627]
+layout_mode = 0
+offset_left = 119.0
+offset_top = -27.0
+offset_right = 398.0
+offset_bottom = 28.0
+theme_override_constants/separation = 8
 
 [node name="PlayerHPLabel" type="Label" parent="UiLayer" unique_id=1740969633]
 anchors_preset = -1
@@ -254,6 +265,7 @@ position = Vector2(314, 299)
 visible = false
 
 [node name="ShopScreen" parent="Popups" unique_id=686466695 instance=ExtResource("13_vtyuj")]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=536448274]
 position = Vector2(574, 324)

@@ -12,6 +12,7 @@ signal hp_changed(new_amount)
 signal deck_changed
 signal currency_changed
 signal item_added(passiveItem: PassiveItemData)
+signal chaos_level_changed
 
 func _ready():
 	start_new_run()
@@ -79,6 +80,7 @@ func spend_currency(amount: int):
 
 func _on_chaos_level_changed(level):
 		chaos_level = level
+		chaos_level_changed.emit()
 		if chaos_level == 3:
 			print("Chaos level reached 3, suffer the CONSEQUENCES")
 			current_hp = current_hp / 2

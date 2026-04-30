@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dc6266tuk85go"]
+
+[ext_resource type="Texture2D" uid="uid://duuw8orc06vpe" path="res://sprites/Chaos_empty_orb.png" id="1_glciv"]
+
+[node name="Control" type="TextureRect" unique_id=816983425]
+texture_filter = 1
+custom_minimum_size = Vector2(48, 48)
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_glciv")
+stretch_mode = 5
