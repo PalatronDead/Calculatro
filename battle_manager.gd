@@ -38,7 +38,8 @@ func _ready() -> void:
 
 func start_battle():
 	spawn_new_enemy()
-	calculator_ui.start_turn(RunManager.deck)
+	RunManager.prepare_deck_for_battle()
+	calculator_ui.start_turn()
 	
 func spawn_new_enemy():
 	var random_encounter = encounter_type.pick_random()
@@ -86,7 +87,7 @@ func _on_equation_made():
 		for item in items_used:
 			if item is ItemDisplay:
 				var data: ItemData = item.data
-				RunManager.deck.erase(data)
+				RunManager.discard_card(data)
 				item.queue_free()
 	else:
 		print("Invalid Equation")

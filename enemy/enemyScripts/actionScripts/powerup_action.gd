@@ -1,6 +1,8 @@
 class_name PowerupAction extends EnemyAction
 
 func execute(enemy, battle_manager):
-	battle_manager.take_damage(base_value)
-	print("Wololo")
-	print(base_value)
+	print("Powering uppp!")
+	enemy.powerup_modifier = 3.0
+	await enemy.get_tree().create_timer(0.5).timeout
+
+	

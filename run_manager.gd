@@ -3,10 +3,13 @@ extends Node
 var max_hp: int = 50
 var current_hp: int
 var deck: Array[ItemData] = []
-var runDeck: Array[ItemData] = []
 var chaos_level: int = 0 : set = _on_chaos_level_changed
 var current_currency: int = 0
 var current_items: Array[PassiveItemData] = []
+
+var runDeck: Array[ItemData] = []
+var draw_pile: Array[ItemData] = []
+var discard_pile: Array[ItemData] = []
 
 signal hp_changed(new_amount)
 signal deck_changed
@@ -41,6 +44,11 @@ func start_new_run():
 ]
 	runDeck = deck.duplicate()
 	
+func prepare_deck_for_battle():
+	draw_pile = runDeck.duplicate()
+	draw_pile.shuffle()
+	discard_pile.clear()
+	
 func add_item_to_deck(itemArray: Array[ItemData]):
 	deck.append_array(itemArray)
 	print("This are the rewards that were picked: " ,itemArray)
@@ -54,6 +62,25 @@ func modifiy_hp(amount: int):
 	hp_changed.emit(current_hp)
 	print("Player HP is now: ", current_hp)
 	
+func draw_single_token() -> ItemData:
+	if draw_pile.size() == 0:
+		shuffle_discard_into_draw()
+		
+	if draw_pile.size() == 0:
+		return null
+	
+	print("Attempting to draw. Draw pile size: ", draw_pile.size(), " | Discard pile size: ", discard_pile.size())
+		
+	return draw_pile.pop_front()
+
+func shuffle_discard_into_draw():
+	draw_pile = discard_pile.duplicate()
+	draw_pile.shuffle()
+	discard_pile.clear()
+	
+	chaos_level += 1
+	print("You FOOL,  Chaos level is now: ", chaos_level)
+	
 func shuffle_deck(deck: Array[ItemData]) -> Array[ItemData]:
 	deck.shuffle()
 	return deck
@@ -65,6 +92,9 @@ func return_deck_after_losing_it_all():
 	deck = runDeck.duplicate()
 	return deck
 
+func discard_card(card_data: ItemData):
+	discard_pile.append(card_data)
+	
 func add_currency(currency: int):
 	current_currency += currency
 	currency_changed.emit(current_currency)

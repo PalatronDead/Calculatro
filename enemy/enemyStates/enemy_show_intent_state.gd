@@ -10,4 +10,5 @@ func get_state_name() -> String:
 
 func enter():
 	enemy.show_intent()
+	enemy.current_actions[enemy.current_action_index].apply_stance(enemy, enemy.battle_manager)
 	print("Show Intent")

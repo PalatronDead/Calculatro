@@ -23,14 +23,14 @@ func _ready() -> void:
 	RunManager.hp_changed.connect(_update_player_ui)
 	RunManager.chaos_level_changed.connect(_on_chaos_level_changed)
 
-func start_turn(full_deck: Array[ItemData]):
+func start_turn():
 	var new_hand: Array[ItemData] = []
-	var deck_copy = full_deck.duplicate()
-	deck_copy.shuffle()
 	
-	for i in range(min(7, deck_copy.size())):
-		new_hand.append(deck_copy[i])
-	
+	for i in range(7):
+		var card = RunManager.draw_single_token()
+		if card != null:
+			new_hand.append(card)
+			
 	draw_hand(new_hand)
 
 func draw_hand(hand_items: Array[ItemData]):
@@ -125,3 +125,20 @@ func _get_first_empty_hand_slot() -> Control:
 		if slot.get_child_count() == 0:
 			return slot
 	return null
+
+func eliminate_entire_hand():
+	var hand_slots_to_eliminate = hand_slots.get_children()
+	var equation_items_to_eliminate = equation_container.get_children()
+	
+	for slot in hand_slots_to_eliminate:
+		for child in slot.get_children():
+			if child is ItemDisplay:
+				var data: ItemData = child.data
+				RunManager.discard_card(data)
+				child.queue_free()
+				
+	for item in equation_items_to_eliminate:
+			if item is ItemDisplay:
+				var data: ItemData = item.data
+				RunManager.discard_card(data)
+				item.queue_free()

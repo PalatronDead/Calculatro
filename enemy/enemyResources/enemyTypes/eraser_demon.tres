@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cose53qia4syv"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_csj21"]
+[ext_resource type="Texture2D" uid="uid://c6u4ot25l44rv" path="res://sprites/enemyDeffendIntentionIcon.png" id="2_3qkx3"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_gy1ey"]
+[ext_resource type="Script" uid="uid://drrsu86w0t6yn" path="res://enemy/enemyScripts/actionScripts/defend_action.gd" id="3_7b5ve"]
+[ext_resource type="Texture2D" uid="uid://duuw8orc06vpe" path="res://sprites/Chaos_empty_orb.png" id="4_c8nw1"]
+[ext_resource type="Script" uid="uid://duqlrcxu7mp2" path="res://enemy/enemyScripts/actionScripts/blankslate_action.gd" id="5_nltp1"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="7_7b5ve"]
+
+[sub_resource type="Resource" id="Resource_obxkl"]
+script = ExtResource("3_7b5ve")
+name = "Defend"
+intent_icon = ExtResource("2_3qkx3")
+metadata/_custom_type_script = "uid://drrsu86w0t6yn"
+
+[sub_resource type="Resource" id="Resource_hw1nm"]
+script = ExtResource("5_nltp1")
+name = "Blank Slate"
+intent_icon = ExtResource("4_c8nw1")
+metadata/_custom_type_script = "uid://duqlrcxu7mp2"
+
+[resource]
+script = ExtResource("2_gy1ey")
+enemy_name = "Eraser Demon"
+max_hp = 150
+sprite_texture = ExtResource("7_7b5ve")
+actions = Array[ExtResource("1_csj21")]([SubResource("Resource_obxkl"), SubResource("Resource_hw1nm")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

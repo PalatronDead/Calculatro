@@ -13,13 +13,16 @@ var ghost_tween: Tween
 
 
 var current_hp: int
+var current_action_index: int
+var damage_modifier: float = 1.0
+var powerup_modifier: float = 1.0
 
 @onready var hp_label = $HPLabel
 
 signal died(enemy_node: Enemy)
 signal enemy_clicked(enemy_node: Enemy)
 
-var current_action: EnemyAction
+var current_actions: Array[EnemyAction]
 var battle_manager
 
 func _ready():
@@ -36,6 +39,7 @@ func setup_enemy():
 	current_hp = data.max_hp
 	update_ui()
 	$Sprite2D.texture = data.sprite_texture
+	current_action_index = 0
 	state_machine.start_machine([
 		EnemyChooseState.new(self),
 		EnemyShowIntentState.new(self),
@@ -45,12 +49,11 @@ func setup_enemy():
 func take_damage(amount: int):
 	var final_damage = amount
 	
-	if current_action.name == 'Defend':
-		final_damage = amount / 2
+	final_damage = final_damage * damage_modifier
 
 	current_hp -= final_damage
 	health_bar.value = current_hp
-	print('The aximum value of the HP Bar after getting hit is : ', health_bar.max_value)
+	print('The maximum value of the HP Bar after getting hit is : ', health_bar.max_value)
 	print('The value of the HP Bar after getting hit is : ', health_bar.value)
 	if ghost_tween and ghost_tween.is_running():
 		ghost_tween.kill()
@@ -76,13 +79,17 @@ func die():
 	died.emit(self)
 	queue_free()
 
-func pick_action() -> EnemyAction:
-	return data.actions.pick_random()
+func pick_actions() -> Array[EnemyAction]:
+	return data.actions
 	
 func show_intent():
+	var current_action = current_actions[current_action_index]
 	intent_icon.texture = current_action.intent_icon
-	if(current_action.base_value > 0):
-		intent_label.text = str(current_action.base_value)
+	
+	var final_base_value = current_action.get_true_base_value(self)
+	
+	if final_base_value > 0:
+		intent_label.text = str(final_base_value)
 	else:
 		intent_label.text = ''
 

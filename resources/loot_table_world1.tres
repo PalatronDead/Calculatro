@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://07kpvxs0es6y"]
 
-[ext_resource type="Script" uid="uid://diuqkrsinmipn" path="res://resources/loot_item.gd" id="1_2wkuj"]
+[ext_resource type="Script" path="res://resources/loot_item.gd" id="1_2wkuj"]
 [ext_resource type="Resource" uid="uid://twn4k7luqs8u" path="res://resources/number_zero.tres" id="2_7nw1p"]
-[ext_resource type="Script" uid="uid://ci144bidodpyx" path="res://resources/loot_table.gd" id="2_35clr"]
+[ext_resource type="Script" path="res://resources/loot_table.gd" id="2_35clr"]
 [ext_resource type="Resource" uid="uid://bo55cv0h2ytar" path="res://resources/number_one.tres" id="3_p0dnc"]
 [ext_resource type="Resource" uid="uid://bsmriclbxk5qh" path="res://resources/number_two.tres" id="4_pdn0x"]
 [ext_resource type="Resource" uid="uid://br1jun745p86w" path="res://resources/number_three.tres" id="5_68oat"]
