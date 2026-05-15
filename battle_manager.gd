@@ -9,8 +9,8 @@ extends Node
 @export var marker_array: Array[Marker2D]
 @export var camera: Camera2D
 @export var shop_screen: Control
-
 @export var calculator_logic: Node
+@export var currency_label: Label
 
 var roulette_wheel = {"effect_chaos_plus_one": 100, "effect_chaos_spike": 20, "effect_chaos_chaos": 10}
 
@@ -27,13 +27,12 @@ var current_player_hp: int
 var shake_strength: float = 0
 
 func _ready() -> void:
+	RunManager.player = self
 	calculator_ui._update_player_ui(RunManager.current_hp)
 	shop_screen.next_battle.connect(_on_next_battle)
 	calculator_ui.equation_made.connect(_on_equation_made)
 	calculator_ui.turn_ended.connect(_on_turn_ended)
 	reward_screen.reroll_selected.connect(_on_reroll_selected)
-	
-	RunManager.item_added.connect(_on_item_added)
 	start_battle()
 
 func start_battle():
@@ -153,22 +152,8 @@ func _on_turn_ended():
 		if is_instance_valid(enemy):
 			if enemy.current_hp > 0:
 				enemy.state_machine.transition("Act")
-	if(RunManager.deck.size() >= 1):
-		var number_of_numbers: int
-		var number_of_operators: int
-		for token in RunManager.deck:
-			if token.type == ItemData.Type.INTEGER:
-				number_of_numbers += 1
-			elif token.type == ItemData.Type.OPERATOR:
-				number_of_operators += 1
-		if number_of_numbers >= 2 && number_of_operators >=1:
-			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
-			print("Shuffleando los shuffles")
-		else:
-			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
-		
-	else:
-		calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.return_deck_after_losing_it_all()))
+	calculator_ui.eliminate_entire_hand()
+	calculator_ui.start_turn()
 			
 func _on_enemy_died(enemy: Enemy):
 	current_enemies.erase(enemy)
@@ -177,6 +162,7 @@ func _on_enemy_died(enemy: Enemy):
 	RunManager.add_currency(money_dropped)
 	if current_enemies.size() == 0:
 		calculator_ui.hide()
+		calculator_ui.currency_label.hide()
 		print("Enemy Defeated!")
 		var random_reward: Array[ItemData] = []
 		for i in range(3):
@@ -193,19 +179,21 @@ func _on_enemy_died(enemy: Enemy):
 			await shop_screen.next_battle
 		elif route == 'battle':	
 			calculator_ui.show()
+			calculator_ui.currency_label.show()
 			#SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 			spawn_new_enemy()
-			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+			calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.draw_pile))
 			RunManager.current_hp = RunManager.max_hp
 			calculator_ui._update_player_ui(RunManager.current_hp)
 
 func _on_next_battle():
 	calculator_ui.show()
+	calculator_ui.currency_label.show()
 		#SoundManager.play_sfx(preload("res://sfx/hitHurt.wav"))
 	spawn_new_enemy()
-	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.deck))
+	calculator_ui.draw_hand(RunManager.shuffle_deck(RunManager.draw_pile))
 	RunManager.current_hp = RunManager.max_hp
-	calculator_ui._update_player_ui(RunManager.current_hp)	
+	calculator_ui._update_player_ui(RunManager.current_hp)
 
 func _on_reroll_selected(amount_rerolls: int, current_rewards: int, max_rewards: int):
 	if(amount_rerolls == 1):
@@ -225,40 +213,18 @@ func _on_enemy_clicked(enemy: Enemy):
 		attack_execute()
 	
 func attack_execute():
+	RunManager.current_enemies = clicked_targets
 	if RunManager.chaos_level >= 2 && (wait_payload.aoe_targets >= 2 || wait_payload.lifesteal_amount >=1 || wait_payload.hit_count >=2):
-		RunManager.modifiy_hp(-5)
-	while wait_payload.hit_count > 0:
-		var are_you_alive: bool = false
+		CommandQueuee.add(ModifyPlayerHPCommand.new(-5))
+	
+	for i in range(wait_payload.hit_count):
 		for target in clicked_targets:
-			if not is_instance_valid(target):
-				continue
-			if target.current_hp <= 0:
-				continue
-			are_you_alive = true
-			target.take_damage(wait_payload.base_damage)
-			camera.apply_shake(5.0)
-			SoundManager.play_sfx(preload("res://sfx/laserShoot (1).wav"))
-		
-		if are_you_alive == false:
-			break
-		wait_payload.hit_count -= 1
-		await get_tree().create_timer(0.15).timeout
-	if wait_payload.lifesteal_amount > 0:
-		if RunManager.current_items.has(preload("res://resources/Items/PassiveItems/minus_monster.tres")):
-			RunManager.modifiy_hp(wait_payload.lifesteal_amount * 2)
-		else:	
-			RunManager.modifiy_hp(wait_payload.lifesteal_amount)
+			CommandQueuee.add(DealDamageCommand.new(wait_payload.base_damage, target, self))
 
-func _on_item_added(passiveItem: PassiveItemData):
-	if passiveItem.name == "Papaya":
-		RunManager.max_hp += 5
-		calculator_ui._update_player_ui(RunManager.max_hp)
-	elif passiveItem.name == "Manzana":
-		RunManager.max_hp += 10
-		calculator_ui._update_player_ui(RunManager.max_hp)	
-	elif passiveItem.name == "Uvas":
-		RunManager.max_hp += 15
-		calculator_ui._update_player_ui(RunManager.max_hp)	
+		CommandQueuee.add( WaitCommand.new(get_tree(), 0.15))
+	if wait_payload.lifesteal_amount > 0:
+		CommandQueuee.add( ModifyPlayerHPCommand.new(wait_payload.lifesteal_amount))
+
 
 func game_over():
 	await get_tree().create_timer(0.5).timeout

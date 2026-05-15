@@ -6,15 +6,18 @@ var deck: Array[ItemData] = []
 var chaos_level: int = 0 : set = _on_chaos_level_changed
 var current_currency: int = 0
 var current_items: Array[PassiveItemData] = []
+var current_enemies: Array[Node] = []
+var player: Node
 
 var runDeck: Array[ItemData] = []
 var draw_pile: Array[ItemData] = []
 var discard_pile: Array[ItemData] = []
 
 signal hp_changed(new_amount)
+signal on_player_hp_modifiying(cmd: Command)
+signal max_hp_changed(new_max_hp)
 signal deck_changed
 signal currency_changed
-signal item_added(passiveItem: PassiveItemData)
 signal chaos_level_changed
 
 func _ready():
@@ -49,11 +52,14 @@ func prepare_deck_for_battle():
 	draw_pile.shuffle()
 	discard_pile.clear()
 	
+func modify_max_hp(amount: int):
+	max_hp += amount
+	
+	emit_signal("max_hp_changed", max_hp)
+	
 func add_item_to_deck(itemArray: Array[ItemData]):
-	deck.append_array(itemArray)
-	print("This are the rewards that were picked: " ,itemArray)
-	print('This is the deck after taking the rewards: ', deck)
 	runDeck.append_array(itemArray)
+	draw_pile.append_array(itemArray)
 	deck_changed.emit()
 
 func modifiy_hp(amount: int):
@@ -89,8 +95,10 @@ func return_deck_after_losing_it_all():
 	chaos_level += 1
 	print("Chaos level is now at: ", chaos_level, ", you FOOL")
 
-	deck = runDeck.duplicate()
-	return deck
+	draw_pile = runDeck.duplicate()
+	draw_pile.shuffle()
+	discard_pile.clear()
+	return draw_pile
 
 func discard_card(card_data: ItemData):
 	discard_pile.append(card_data)
@@ -101,7 +109,7 @@ func add_currency(currency: int):
 	
 func add_passive_item(passive_item: PassiveItemData):
 	current_items.append(passive_item)
-	item_added.emit(passive_item)
+	passive_item.ready()
 	print('New item has been added, the name is: ' , passive_item.name)
 
 func spend_currency(amount: int):

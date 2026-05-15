@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c3m21wmd0tfm0"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_s7bbd"]
+[ext_resource type="Texture2D" uid="uid://duuw8orc06vpe" path="res://sprites/Chaos_empty_orb.png" id="2_gcr5q"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_h28y4"]
+[ext_resource type="Texture2D" uid="uid://dfdvob2xc2ips" path="res://sprites/PencilDemon.png" id="3_h28y4"]
+[ext_resource type="Script" uid="uid://5bmxce228dwn" path="res://enemy/enemyScripts/actionScripts/redraw_action.gd" id="3_poipl"]
+
+[sub_resource type="Resource" id="Resource_gyc4e"]
+script = ExtResource("3_poipl")
+name = "Redraw"
+intent_icon = ExtResource("2_gcr5q")
+
+[resource]
+script = ExtResource("2_h28y4")
+enemy_name = "Pencil Demon"
+max_hp = 70
+sprite_texture = ExtResource("3_h28y4")
+actions = Array[ExtResource("1_s7bbd")]([SubResource("Resource_gyc4e")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

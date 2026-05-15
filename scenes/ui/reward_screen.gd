@@ -86,4 +86,5 @@ func _on_shop_button_pressed() -> void:
 
 func _on_next_battle_button_pressed() -> void:
 	hide()
-	route_selected.emit('shop')
+	reward_selected.emit(rewardsArray)
+	route_selected.emit('battle')
