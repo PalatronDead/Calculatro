@@ -3,21 +3,21 @@ class_name Enemy extends Node2D
 @export var data: EnemyData
 
 @onready var state_machine: StateMachine = $StateMachine
-@onready var intent_icon: TextureRect = $IntentIcon
-@onready var intent_label: Label = $IntentLabel
-@onready var ghost_bar: TextureProgressBar = $GhostBar
-@onready var health_bar: TextureProgressBar = $HealthBar
+@onready var intent_icon: TextureRect = $EnemyUI/IntentIcon
+@onready var intent_label: Label = $EnemyUI/IntentLabel
+@onready var ghost_bar: TextureProgressBar = $EnemyUI/GhostBar
+@onready var health_bar: TextureProgressBar = $EnemyUI/HealthBar
+@onready var hp_label = $EnemyUI/HPLabel
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var ui_container: Control = $EnemyUI
+@onready var enemy_texture_button: TextureButton = $EnemyTextureButton
 
 var ghost_tween: Tween
-
-
 
 var current_hp: int
 var current_action_index: int
 var damage_modifier: float = 1.0
 var powerup_modifier: float = 1.0
-
-@onready var hp_label = $HPLabel
 
 signal died(enemy_node: Enemy)
 signal enemy_clicked(enemy_node: Enemy)
@@ -38,7 +38,8 @@ func _ready():
 func setup_enemy():
 	current_hp = data.max_hp
 	update_ui()
-	$Sprite2D.texture = data.sprite_texture
+	sprite.texture = data.sprite_texture
+	_align_ui_to_enemy()
 	current_action_index = 0
 	state_machine.start_machine([
 		EnemyChooseState.new(self),
@@ -75,6 +76,23 @@ func take_damage(amount: int):
 func update_ui():
 	hp_label.text = str(current_hp) + " / " + str(data.max_hp)
 
+func _align_ui_to_enemy():
+	var texture_height = sprite.texture.get_size().y
+	var texture_width = sprite.texture.get_size().x
+	var actual_height = texture_height * sprite.scale.y
+	var actual_width = texture_width * sprite.scale.x
+	
+	var head_y_position = -(actual_height / 2.0)
+	ui_container.position.y = head_y_position - 60 
+	ui_container.position.x = - (ui_container.size.x / 2.0)
+	enemy_texture_button.size = Vector2(actual_width, actual_height)
+	enemy_texture_button.position = Vector2(-(actual_width / 2.0), -(actual_height / 2.0))
+	print('The textures height is: ', texture_height)
+	print('The texture_width is: ', texture_width)
+	print('The actual_height is: ', actual_height)
+	print('The actual_width is: ', actual_width)
+	print('The Ui Container,s position is: ', ui_container.position.y )
+	
 func die():
 	died.emit(self)
 	queue_free()

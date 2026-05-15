@@ -4,5 +4,9 @@
 
 [resource]
 script = ExtResource("1_latvc")
+type = null
 display_name = "0"
+value = null
+operator_symbol = null
+modifiers = null
 metadata/_custom_type_script = "uid://4fpm4dhehcso"

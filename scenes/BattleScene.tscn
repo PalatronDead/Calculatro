@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dc6266tuk85go" path="res://scenes/ui/chaos_orb.tscn" id="9_lyay3"]
 [ext_resource type="Texture2D" uid="uid://gomiy5630eag" path="res://sprites/hp_calculatro_particles_player.png" id="10_l1ooa"]
 [ext_resource type="Script" path="res://scenes/camera.gd" id="12_irk3j"]
-[ext_resource type="PackedScene" uid="uid://eiaqk54oj564" path="res://scenes/shop_screen.tscn" id="13_vtyuj"]
+[ext_resource type="PackedScene" path="res://scenes/shop_screen.tscn" id="13_vtyuj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yex5"]
 
@@ -259,13 +259,13 @@ scale_amount_max = 3.0
 script = ExtResource("3_0yex5")
 
 [node name="FirstEnemyPositionMarker" type="Marker2D" parent="." unique_id=1330476558]
-position = Vector2(178, 132)
+position = Vector2(169, 213)
 
 [node name="SecondEnemyPositionMarker" type="Marker2D" parent="." unique_id=582654123]
-position = Vector2(459, 137)
+position = Vector2(471, 210)
 
 [node name="ThirdEnemyPositionMarker" type="Marker2D" parent="." unique_id=683107923]
-position = Vector2(314, 299)
+position = Vector2(314, 361)
 
 [node name="Popups" type="CanvasLayer" parent="." unique_id=1941701637]
 

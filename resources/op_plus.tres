@@ -7,6 +7,8 @@
 script = ExtResource("1_7osg8")
 type = 1
 display_name = "+"
+value = null
 operator_symbol = "+"
+modifiers = null
 operator_action = ExtResource("1_1fj86")
 metadata/_custom_type_script = "uid://4fpm4dhehcso"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RedrawAction" format=3 uid="uid://coj28s52tmdea"]
 
-[ext_resource type="Script" uid="uid://d051xto2kpjsg" path="res://enemy/enemyScripts/actionScripts/redraw_action.gd" id="1_ih6uo"]
+[ext_resource type="Script" path="res://enemy/enemyScripts/actionScripts/redraw_action.gd" id="1_ih6uo"]
 [ext_resource type="Texture2D" uid="uid://duuw8orc06vpe" path="res://sprites/Chaos_empty_orb.png" id="1_wku5x"]
 
 [resource]
