@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://xibcj83ajtw2"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_awmey"]
+[ext_resource type="Texture2D" uid="uid://cj3dw2pgqmr2c" path="res://sprites/enemyAttackIntentionIcon.png" id="2_4osin"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_yol2n"]
+[ext_resource type="Script" uid="uid://wsrcvt7u07mf" path="res://enemy/enemyScripts/actionScripts/attack_action.gd" id="3_4osin"]
+[ext_resource type="Resource" uid="uid://dpg0o8vpi2w0k" path="res://enemy/enemyResources/actionsResources/defend_action.tres" id="4_uh1he"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="5_uh1he"]
+
+[sub_resource type="Resource" id="Resource_yk5n2"]
+script = ExtResource("3_4osin")
+name = "Attack"
+intent_icon = ExtResource("2_4osin")
+base_value = 5
+metadata/_custom_type_script = "uid://wsrcvt7u07mf"
+
+[resource]
+script = ExtResource("2_yol2n")
+enemy_name = "Ruler_Demon"
+max_hp = 100
+sprite_texture = ExtResource("5_uh1he")
+actions = Array[ExtResource("1_awmey")]([SubResource("Resource_yk5n2"), ExtResource("4_uh1he")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

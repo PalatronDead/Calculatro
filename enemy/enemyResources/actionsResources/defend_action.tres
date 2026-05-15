@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DefendAction" format=3 uid="uid://dpg0o8vpi2w0k"]
+
+[ext_resource type="Script" uid="uid://drrsu86w0t6yn" path="res://enemy/enemyScripts/actionScripts/defend_action.gd" id="1_2y731"]
+[ext_resource type="Texture2D" uid="uid://c6u4ot25l44rv" path="res://sprites/enemyDeffendIntentionIcon.png" id="1_j7wok"]
+
+[resource]
+script = ExtResource("1_2y731")
+name = "Defend"
+intent_icon = ExtResource("1_j7wok")
+metadata/_custom_type_script = "uid://drrsu86w0t6yn"

@@ -1,25 +1,45 @@
 class_name Enemy extends Node2D
 
-@export var possible_actions: Array[EnemyAction]
+@export var data: EnemyData
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var intent_icon: TextureRect = $IntentIcon
 @onready var intent_label: Label = $IntentLabel
+@onready var ghost_bar: TextureProgressBar = $GhostBar
+@onready var health_bar: TextureProgressBar = $HealthBar
 
-@export var max_hp: int = 100
+var ghost_tween: Tween
+
+
+
 var current_hp: int
+var current_action_index: int
+var damage_modifier: float = 1.0
+var powerup_modifier: float = 1.0
 
 @onready var hp_label = $HPLabel
-var is_defending: bool = false
 
-signal died
+signal died(enemy_node: Enemy)
+signal enemy_clicked(enemy_node: Enemy)
 
-var current_action: EnemyAction
+var current_actions: Array[EnemyAction]
 var battle_manager
 
 func _ready():
-	current_hp = max_hp
+	if data:
+		ghost_bar.max_value = data.max_hp 
+		health_bar.max_value = data.max_hp
+
+		ghost_bar.value = data.max_hp
+		health_bar.value = data.max_hp
+		print('The maximum value of the HP Bar is: ', health_bar.max_value)
+		setup_enemy()
+	
+func setup_enemy():
+	current_hp = data.max_hp
 	update_ui()
+	$Sprite2D.texture = data.sprite_texture
+	current_action_index = 0
 	state_machine.start_machine([
 		EnemyChooseState.new(self),
 		EnemyShowIntentState.new(self),
@@ -29,34 +49,54 @@ func _ready():
 func take_damage(amount: int):
 	var final_damage = amount
 	
-	if is_defending:
-		final_damage = amount / 2
-		is_defending = false
+	final_damage = final_damage * damage_modifier
 
 	current_hp -= final_damage
+	health_bar.value = current_hp
+	print('The maximum value of the HP Bar after getting hit is : ', health_bar.max_value)
+	print('The value of the HP Bar after getting hit is : ', health_bar.value)
+	if ghost_tween and ghost_tween.is_running():
+		ghost_tween.kill()
+		
+	ghost_tween = create_tween()
+	
+	ghost_tween.tween_interval(0.2)
+	
+	ghost_tween.tween_property(ghost_bar, "value", current_hp, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	update_ui()
 	
-	modulate = Color.RED
+	self.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
-	modulate = Color.WHITE
+	self.modulate = Color.WHITE
 	
 	if current_hp <= 0:
 		die()
 		
 func update_ui():
-	hp_label.text = str(current_hp) + " / " + str(max_hp)
+	hp_label.text = str(current_hp) + " / " + str(data.max_hp)
 
 func die():
-	died.emit()
+	died.emit(self)
 	queue_free()
 
-func pick_action() -> EnemyAction:
-	return possible_actions.pick_random()
+func pick_actions() -> Array[EnemyAction]:
+	return data.actions
 	
 func show_intent():
+	var current_action = current_actions[current_action_index]
 	intent_icon.texture = current_action.intent_icon
-	if(current_action.base_value > 0):
-		intent_label.text = str(current_action.base_value)
+	
+	var final_base_value = current_action.get_true_base_value(self)
+	
+	if final_base_value > 0:
+		intent_label.text = str(final_base_value)
+	else:
+		intent_label.text = ''
 
 func hide_intent():
 	intent_icon.texture = null
+
+
+func _on_enemy_pressed() -> void:
+	print('The enemy clicked was', data.enemy_name)
+	enemy_clicked.emit(self)

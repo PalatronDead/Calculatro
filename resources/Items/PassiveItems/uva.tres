@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveItemData" format=3 uid="uid://b6vb6o3r32btr"]
+
+[ext_resource type="Script" uid="uid://b147um7nfwhn2" path="res://resources/Items/PassiveItems/passive_item_data.gd" id="1_q3ss0"]
+
+[resource]
+script = ExtResource("1_q3ss0")
+name = "Uvas"
+cost = 75
+description = "This item gives you +15 max hp"
+metadata/_custom_type_script = "uid://b147um7nfwhn2"

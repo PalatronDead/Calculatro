@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://xmuh6u24huws"]
+
+[ext_resource type="Script" uid="uid://d0rh1adjqkwk" path="res://resources/enemy_action.gd" id="1_jusjd"]
+[ext_resource type="Texture2D" uid="uid://cj3dw2pgqmr2c" path="res://sprites/enemyAttackIntentionIcon.png" id="2_uajrv"]
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="2_v0xn6"]
+[ext_resource type="Script" uid="uid://wsrcvt7u07mf" path="res://enemy/enemyScripts/actionScripts/attack_action.gd" id="3_lye7j"]
+[ext_resource type="Texture2D" uid="uid://b05k5mlqna83k" path="res://sprites/GuanteCalculatro.png" id="4_jp2w2"]
+[ext_resource type="Script" uid="uid://coav4lsmlwrm3" path="res://enemy/enemyScripts/actionScripts/powerup_action.gd" id="5_0jif0"]
+[ext_resource type="Texture2D" uid="uid://d3dme7l07cavp" path="res://sprites/RulerEnemy.png" id="7_x77cg"]
+
+[sub_resource type="Resource" id="Resource_uajrv"]
+script = ExtResource("3_lye7j")
+name = "Attack"
+intent_icon = ExtResource("2_uajrv")
+base_value = 10
+metadata/_custom_type_script = "uid://wsrcvt7u07mf"
+
+[sub_resource type="Resource" id="Resource_ambf0"]
+script = ExtResource("5_0jif0")
+name = "Powerup"
+intent_icon = ExtResource("4_jp2w2")
+base_value = 3
+metadata/_custom_type_script = "uid://coav4lsmlwrm3"
+
+[resource]
+script = ExtResource("2_v0xn6")
+enemy_name = "Scissors Demon"
+max_hp = 80
+sprite_texture = ExtResource("7_x77cg")
+actions = Array[ExtResource("1_jusjd")]([SubResource("Resource_uajrv"), SubResource("Resource_ambf0")])
+metadata/_custom_type_script = "uid://dcooox3ejx2iu"

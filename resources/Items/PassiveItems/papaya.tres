@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveItemData" format=3 uid="uid://briihcfo8j2f3"]
+
+[ext_resource type="Script" uid="uid://b147um7nfwhn2" path="res://resources/Items/PassiveItems/passive_item_data.gd" id="1_6gliy"]
+
+[resource]
+script = ExtResource("1_6gliy")
+name = "Papaya"
+cost = 23
+description = "This item gives you +5 max hp "
+metadata/_custom_type_script = "uid://b147um7nfwhn2"

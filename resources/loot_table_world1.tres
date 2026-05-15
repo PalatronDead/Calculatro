@@ -1,0 +1,88 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://07kpvxs0es6y"]
+
+[ext_resource type="Script" path="res://resources/loot_item.gd" id="1_2wkuj"]
+[ext_resource type="Resource" uid="uid://twn4k7luqs8u" path="res://resources/number_zero.tres" id="2_7nw1p"]
+[ext_resource type="Script" path="res://resources/loot_table.gd" id="2_35clr"]
+[ext_resource type="Resource" uid="uid://bo55cv0h2ytar" path="res://resources/number_one.tres" id="3_p0dnc"]
+[ext_resource type="Resource" uid="uid://bsmriclbxk5qh" path="res://resources/number_two.tres" id="4_pdn0x"]
+[ext_resource type="Resource" uid="uid://br1jun745p86w" path="res://resources/number_three.tres" id="5_68oat"]
+[ext_resource type="Resource" uid="uid://dc06offsowpwq" path="res://resources/number_four.tres" id="6_l8yry"]
+[ext_resource type="Resource" uid="uid://ud56xyu5srru" path="res://resources/number_five.tres" id="7_tqirf"]
+[ext_resource type="Resource" uid="uid://s2smwnevobwq" path="res://resources/op_plus.tres" id="8_s03eu"]
+[ext_resource type="Resource" uid="uid://c6bw265w0xjx3" path="res://resources/op_minus.tres" id="9_6il0i"]
+[ext_resource type="Resource" uid="uid://dvx73ku4lr75p" path="res://resources/op_mult.tres" id="10_pdcop"]
+[ext_resource type="Resource" uid="uid://bayqutgmi0lqd" path="res://resources/OperatorActions/division_action.tres" id="11_p0dnc"]
+[ext_resource type="Script" uid="uid://4fpm4dhehcso" path="res://resources/item_data.gd" id="12_pdn0x"]
+
+[sub_resource type="Resource" id="Resource_68oat"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("2_7nw1p")
+weight = 5
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_l8yry"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("3_p0dnc")
+weight = 100
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_tqirf"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("4_pdn0x")
+weight = 100
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_s03eu"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("5_68oat")
+weight = 100
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_6il0i"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("6_l8yry")
+weight = 100
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_pdcop"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("7_tqirf")
+weight = 100
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_ju8as"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("8_s03eu")
+weight = 50
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_fabxb"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("9_6il0i")
+weight = 50
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_fw30u"]
+script = ExtResource("1_2wkuj")
+item = ExtResource("10_pdcop")
+weight = 25
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[sub_resource type="Resource" id="Resource_wusje"]
+script = ExtResource("12_pdn0x")
+type = 1
+display_name = "/"
+operator_symbol = "/"
+operator_action = ExtResource("11_p0dnc")
+metadata/_custom_type_script = "uid://4fpm4dhehcso"
+
+[sub_resource type="Resource" id="Resource_hxygu"]
+script = ExtResource("1_2wkuj")
+item = SubResource("Resource_wusje")
+weight = 25
+metadata/_custom_type_script = "uid://diuqkrsinmipn"
+
+[resource]
+script = ExtResource("2_35clr")
+loot_items = Array[ExtResource("1_2wkuj")]([SubResource("Resource_68oat"), SubResource("Resource_l8yry"), SubResource("Resource_tqirf"), SubResource("Resource_s03eu"), SubResource("Resource_6il0i"), SubResource("Resource_pdcop"), SubResource("Resource_ju8as"), SubResource("Resource_fabxb"), SubResource("Resource_fw30u"), SubResource("Resource_hxygu")])
+metadata/_custom_type_script = "uid://ci144bidodpyx"

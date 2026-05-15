@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveItemData" format=3 uid="uid://ya8taanfitqi"]
+
+[ext_resource type="Script" uid="uid://b147um7nfwhn2" path="res://resources/Items/PassiveItems/passive_item_data.gd" id="1_he4aa"]
+
+[resource]
+script = ExtResource("1_he4aa")
+name = "Minus Monster"
+cost = 50
+description = "This item doubles the healing obtained when using the - operator"
+metadata/_custom_type_script = "uid://b147um7nfwhn2"

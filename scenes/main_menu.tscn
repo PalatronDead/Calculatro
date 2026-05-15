@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://u7vx8yqbabhr"]
+[gd_scene format=3 uid="uid://u7vx8yqbabhr"]
 
 [ext_resource type="Script" uid="uid://5chybx7ypql1" path="res://scenes/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://c8qd3tjiddiuy" path="res://sprites/CalculatorCalculatroSpriteSheet.png" id="2_ekxnf"]
@@ -60,7 +60,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1154963718]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +69,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1954475257]
 layout_mode = 0
 offset_left = 413.0
 offset_top = 528.0
@@ -78,7 +78,7 @@ offset_bottom = 637.0
 theme_override_font_sizes/font_size = 54
 text = "Start"
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1931480538]
 layout_mode = 0
 offset_left = 295.0
 offset_top = 6.0
@@ -88,7 +88,7 @@ theme_override_colors/font_color = Color(1, 0.5529412, 1, 1)
 theme_override_font_sizes/font_size = 82
 text = "CALCULATRO"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1693656601]
 texture_filter = 1
 position = Vector2(556, 313)
 scale = Vector2(5.273438, 6.015625)

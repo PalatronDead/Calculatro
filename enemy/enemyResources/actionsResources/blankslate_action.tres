@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BlankSlateAction" format=3 uid="uid://ceeeac271hw8f"]
+
+[ext_resource type="Texture2D" uid="uid://duuw8orc06vpe" path="res://sprites/Chaos_empty_orb.png" id="1_4eobm"]
+[ext_resource type="Script" uid="uid://duqlrcxu7mp2" path="res://enemy/enemyScripts/actionScripts/blankslate_action.gd" id="1_cycpf"]
+
+[resource]
+script = ExtResource("1_cycpf")
+name = "Blank Slate"
+intent_icon = ExtResource("1_4eobm")
+metadata/_custom_type_script = "uid://duqlrcxu7mp2"
