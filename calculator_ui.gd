@@ -11,17 +11,22 @@ extends Control
 @export var player_hp_particle: CPUParticles2D
 @export var chaos_orb_container:HBoxContainer
 @export var chaos_orb_scene: PackedScene
+@export var currency_label: Label
 
 signal equation_made
 signal turn_ended
 
 var current_hand_data: Array[ItemData] = []
+var previous_hp: int = 0
 
 func _ready() -> void:
 	execute_button.pressed.connect(_on_execute_pressed)
 	end_turn_button.pressed.connect(_on_end_turn_pressed)
 	RunManager.hp_changed.connect(_update_player_ui)
+	RunManager.currency_changed.connect(_update_money_ui)
+	RunManager.max_hp_changed.connect(_update_player_ui)
 	RunManager.chaos_level_changed.connect(_on_chaos_level_changed)
+	previous_hp = RunManager.current_hp
 
 func start_turn():
 	var new_hand: Array[ItemData] = []
@@ -77,31 +82,40 @@ func _on_execute_pressed():
 func _on_end_turn_pressed():
 	turn_ended.emit()
 	
+func _update_player_max_hp_ui(max_hp: int):
+	player_hp_label.text = 'PLAYER HP: ' + str(RunManager.current_hp) + "/" + str(max_hp)
+	
 func _update_player_ui(new_hp : int):
-	player_hp_label.text = "PLAYER HP: " +  str(new_hp)
-	var hp_percentage: float = float(new_hp) / float(RunManager.max_hp)
+	var current = RunManager.current_hp
+	var maximum = RunManager.max_hp
+	
+	player_hp_label.text = "PLAYER HP: %s/%s" % [current, maximum]
+	
+	var hp_percentage: float = float(current) / float(maximum)
+
+	var took_damage: bool = current < previous_hp
+	previous_hp = current 
 	
 	if hp_percentage > 0.75:
 		player_hp_sprite.frame = 0
-		if hp_percentage == 1:
+		if hp_percentage == 1.0:
+			player_hp_particle.emitting = false 
 			return
-		player_hp_particle.emitting = true
 	elif hp_percentage > 0.50:
 		player_hp_sprite.frame = 1 
-		camera.apply_shake(25.0)
-		player_hp_particle.emitting = true
 	elif hp_percentage > 0.25:
 		player_hp_sprite.frame = 2 
-		camera.apply_shake(25.0)
-		player_hp_particle.emitting = true
 	elif hp_percentage > 0.01:
 		player_hp_sprite.frame = 3 
-		camera.apply_shake(25.0)
-		player_hp_particle.emitting = true
 	else:
 		player_hp_sprite.frame = 4
-		camera.apply_shake(50.0)
+		
+	if took_damage:
 		player_hp_particle.emitting = true
+		if hp_percentage <= 0.01:
+			camera.apply_shake(50.0) 
+		else:
+			camera.apply_shake(25.0) 
 		
 func _clear_ui():
 	_clear_equation()
@@ -112,6 +126,9 @@ func _clear_ui():
 func _clear_equation(): 
 	for child in equation_container.get_children():
 		child.queue_free()
+		
+func _update_money_ui(money: int):
+	currency_label.text = "Axioms: " + str(money)
 		
 func add_to_deck(new_item: ItemData):
 	RunManager.deck_pool.append(new_item)

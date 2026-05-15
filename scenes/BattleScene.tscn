@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://xtyiu7v0gpso" path="res://enemy/encounter/encounter_data.gd" id="3_a4ns4"]
 [ext_resource type="Texture2D" uid="uid://dy13rcfrvtrxs" path="res://sprites/CalculatorCalculatroAdvanced1.png" id="3_ftvu5"]
 [ext_resource type="PackedScene" uid="uid://cyru5tb0ceyo5" path="res://scenes/ui/reward_screen.tscn" id="4_28s16"]
-[ext_resource type="Resource" uid="uid://cbtmm0xd7oywv" path="res://enemy/encounter/encounterResources/eraser_weak_encounter.tres" id="4_l1ooa"]
+[ext_resource type="Resource" uid="uid://cy5sldem7gu4q" path="res://enemy/encounter/encounterResources/pencil_weak_encounter.tres" id="4_l1ooa"]
 [ext_resource type="Script" uid="uid://d1yndd3ssp56y" path="res://run_manager.gd" id="6_0yex5"]
 [ext_resource type="Texture2D" uid="uid://71kl3065306o" path="res://sprites/Hp_Calculatro_Player.png" id="9_7acxt"]
 [ext_resource type="PackedScene" uid="uid://dc6266tuk85go" path="res://scenes/ui/chaos_orb.tscn" id="9_lyay3"]
@@ -67,7 +67,7 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "camera", "shop_screen", "calculator_logic")]
+[node name="BattleManager" type="Node" unique_id=1525238974 node_paths=PackedStringArray("calculator_ui", "spawn_point", "player_hp_label", "reward_screen", "marker_array", "camera", "shop_screen", "calculator_logic", "currency_label")]
 script = ExtResource("1_28s16")
 calculator_ui = NodePath("UiLayer/CalculatorUI")
 spawn_point = NodePath("FirstEnemyPositionMarker")
@@ -79,10 +79,11 @@ marker_array = [NodePath("FirstEnemyPositionMarker"), NodePath("SecondEnemyPosit
 camera = NodePath("Camera2D")
 shop_screen = NodePath("Popups/ShopScreen")
 calculator_logic = NodePath("CalculatorLogic")
+currency_label = NodePath("UiLayer/CalculatorUI/CurrencyLabel")
 
 [node name="UiLayer" type="CanvasLayer" parent="." unique_id=905362623]
 
-[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button", "player_hp_label", "player_hp_sprite", "camera", "player_hp_particle", "chaos_orb_container")]
+[node name="CalculatorUI" type="Control" parent="UiLayer" unique_id=160826576 node_paths=PackedStringArray("hand_slots", "equation_container", "execute_button", "calculator_logic", "end_turn_button", "player_hp_label", "player_hp_sprite", "camera", "player_hp_particle", "chaos_orb_container", "currency_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 580.0
@@ -102,6 +103,7 @@ camera = NodePath("../../Camera2D")
 player_hp_particle = NodePath("../PlayerHPParticle")
 chaos_orb_container = NodePath("ChaosOrbContainer")
 chaos_orb_scene = ExtResource("9_lyay3")
+currency_label = NodePath("CurrencyLabel")
 
 [node name="CalculatorBackground" type="Sprite2D" parent="UiLayer/CalculatorUI" unique_id=1216589211]
 texture_filter = 1
@@ -214,6 +216,14 @@ offset_top = -27.0
 offset_right = 398.0
 offset_bottom = 28.0
 theme_override_constants/separation = 8
+
+[node name="CurrencyLabel" type="Label" parent="UiLayer/CalculatorUI" unique_id=1161802753]
+layout_mode = 0
+offset_left = 389.0
+offset_top = -63.0
+offset_right = 455.0
+offset_bottom = -40.0
+text = "Axioms: 0"
 
 [node name="PlayerHPLabel" type="Label" parent="UiLayer" unique_id=1740969633]
 anchors_preset = -1

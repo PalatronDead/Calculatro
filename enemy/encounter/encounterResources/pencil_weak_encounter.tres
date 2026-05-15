@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EncounterData" format=3 uid="uid://cy5sldem7gu4q"]
+
+[ext_resource type="Script" uid="uid://dcooox3ejx2iu" path="res://enemy/enemyScripts/enemy_data.gd" id="1_lq4wi"]
+[ext_resource type="Script" uid="uid://xtyiu7v0gpso" path="res://enemy/encounter/encounter_data.gd" id="2_dqefj"]
+[ext_resource type="Resource" uid="uid://c3m21wmd0tfm0" path="res://enemy/enemyResources/enemyTypes/pencil_demon.tres" id="2_l2sgg"]
+
+[resource]
+script = ExtResource("2_dqefj")
+encounter_enemies = Array[ExtResource("1_lq4wi")]([ExtResource("2_l2sgg")])
+metadata/_custom_type_script = "uid://xtyiu7v0gpso"

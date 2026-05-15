@@ -39,7 +39,7 @@ func _on_button_clicked(item_data: PassiveItemData, shop_item_button: ShopItemDi
 		print('couldnt buy it because your money amount is: ', RunManager.current_currency)
 
 func _update_money_ui(money: int):
-	currency_label.text = "Money: " + str(money)
+	currency_label.text = "Axioms: " + str(money)
 	
 func _on_next_battle_button_pressed() -> void:
 	next_battle.emit()

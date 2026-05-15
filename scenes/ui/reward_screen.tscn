@@ -54,10 +54,10 @@ text = "Rewards Collected 0/2"
 
 [node name="RerollButton" type="Button" parent="." unique_id=1041958552]
 layout_mode = 0
-offset_left = 440.0
-offset_top = 454.0
-offset_right = 667.0
-offset_bottom = 519.0
+offset_left = 348.0
+offset_top = 452.0
+offset_right = 575.0
+offset_bottom = 517.0
 theme_override_font_sizes/font_size = 34
 text = "Reroll"
 
@@ -97,5 +97,15 @@ offset_bottom = 162.0
 theme_override_font_sizes/font_size = 54
 text = "Stage Completed"
 
+[node name="SkipButton" type="Button" parent="." unique_id=454069750]
+layout_mode = 0
+offset_left = 624.0
+offset_top = 452.0
+offset_right = 851.0
+offset_bottom = 517.0
+theme_override_font_sizes/font_size = 34
+text = "Skip"
+
 [connection signal="pressed" from="ShopButton" to="." method="_on_shop_button_pressed"]
 [connection signal="pressed" from="NextBattleButton" to="." method="_on_next_battle_button_pressed"]
+[connection signal="pressed" from="SkipButton" to="." method="_on_next_battle_button_pressed"]
